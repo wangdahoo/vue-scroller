@@ -1,9 +1,14 @@
 <template>
-  <div class="page" id="{{ pageId }}">
+  <div class="page" id="{{ pageId }}"
+       @touchstart="touchStart($event)"
+       @touchmove="touchMove($event)"
+       @touchend="touchEnd($event)"
+  >
     <div class="content" id="{{ contentId }}">
       <div class="pull-to-refresh-layer" :class="{'active': state == 1, 'active refreshing': state == 2}">
         {{ getStateText(state) }}
       </div>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -70,10 +75,14 @@
 </style>
 <script>
   import uuid from 'node-uuid'
-  import '../core'
+  import '../module/core'
+  import getContentRender from '../module/render'
 
   const page_id = 'page-' + uuid.v4().substr(0, 8)
   const content_id = 'content-' + uuid.v4().substr(0, 8)
+
+  let scroller, page, content, pullToRefreshLayer;
+  let mousedown = false;
 
   export default{
     props: {
@@ -85,17 +94,17 @@
         pageId: page_id,
         contentId: content_id,
         state: 0, // 0: pull to refresh, 1: release to refresh, 2: refreshing
-        stateText: 'Pull to Refresh'
+        stateText: 'Pull to Refresh',
+
       }
     },
 
     ready() {
-      let page = document.getElementById(this.pageId)
-      let content = document.getElementById(this.contentId)
+      page = document.getElementById(this.pageId)
+      content = document.getElementById(this.contentId)
+      pullToRefreshLayer = content.getElementsByTagName("div")[0]
 
-      let pullToRefreshLayer = content.getElementsByTagName("div")[0]
-
-      let scroller = new Scroller(getContentRender(content), {
+      scroller = new Scroller(getContentRender(content), {
         scrollingX: false
       });
 
@@ -113,74 +122,7 @@
 
       // setup scroller
       let rect = page.getBoundingClientRect()
-      scroller.setPosition(rect.left+page.clientLeft, rect.top+page.clientTop)
-
-      this.scroller = scroller
-
-      // Event Handlers
-      if ('ontouchstart' in window) {
-
-        page.addEventListener("touchstart", function(e) {
-          // Don't react if initial down happens on a form element
-          if (e.target.tagName.match(/input|textarea|select/i)) {
-            return
-          }
-
-          scroller.doTouchStart(e.touches, e.timeStamp)
-          e.preventDefault()
-        }, false)
-
-        document.addEventListener("touchmove", function(e) {
-          scroller.doTouchMove(e.touches, e.timeStamp)
-        }, false)
-
-        document.addEventListener("touchend", function(e) {
-          scroller.doTouchEnd(e.timeStamp)
-        }, false)
-
-      } else {
-
-        let mousedown = false
-
-        page.addEventListener("mousedown", function(e) {
-          // Don't react if initial down happens on a form element
-          if (e.target.tagName.match(/input|textarea|select/i)) {
-            return
-          }
-
-          scroller.doTouchStart([{
-            pageX: e.pageX,
-            pageY: e.pageY
-          }], e.timeStamp)
-
-          mousedown = true
-        }, false)
-
-        document.addEventListener("mousemove", function(e) {
-          if (!mousedown) {
-            return
-          }
-
-          scroller.doTouchMove([{
-            pageX: e.pageX,
-            pageY: e.pageY
-          }], e.timeStamp)
-
-          mousedown = true
-        }, false)
-
-        document.addEventListener("mouseup", function(e) {
-          if (!mousedown) {
-            return
-          }
-
-          scroller.doTouchEnd(e.timeStamp)
-
-          mousedown = false
-        }, false)
-
-      }
-
+      scroller.setPosition(rect.left + page.clientLeft, rect.top + page.clientTop)
     },
 
     methods: {
@@ -192,7 +134,60 @@
         } else {
           return 'Pull to Refresh'
         }
-      }
+      },
+
+      resize() {
+        scroller.setDimensions(page.clientWidth, page.clientHeight, content.offsetWidth, content.offsetHeight);
+      },
+
+      touchStart(e) {
+        // Don't react if initial down happens on a form element
+        if (e.target.tagName.match(/input|textarea|select/i)) {
+          return
+        }
+        scroller.doTouchStart(e.touches, e.timeStamp)
+        e.preventDefault()
+      },
+
+      touchMove(e) {
+        scroller.doTouchMove(e.touches, e.timeStamp)
+      },
+
+      touchEnd(e) {
+        scroller.doTouchEnd(e.timeStamp)
+      },
+
+      mouseDown(e) {
+        // Don't react if initial down happens on a form element
+        if (e.target.tagName.match(/input|textarea|select/i)) {
+          return
+        }
+        scroller.doTouchStart([{
+          pageX: e.pageX,
+          pageY: e.pageY
+        }], e.timeStamp)
+        mousedown = true
+      },
+
+      mouseMove(e) {
+        if (!mousedown) {
+          return
+        }
+        scroller.doTouchMove([{
+          pageX: e.pageX,
+          pageY: e.pageY
+        }], e.timeStamp)
+        mousedown = true
+      },
+
+      mouseUp(e) {
+        if (!mousedown) {
+          return
+        }
+        scroller.doTouchEnd(e.timeStamp)
+        mousedown = false
+      },
+
     }
 
   }
