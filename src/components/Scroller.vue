@@ -95,7 +95,6 @@
         contentId: content_id,
         state: 0, // 0: pull to refresh, 1: release to refresh, 2: refreshing
         stateText: 'Pull to Refresh',
-
       }
     },
 
@@ -105,7 +104,8 @@
       pullToRefreshLayer = content.getElementsByTagName("div")[0]
 
       scroller = new Scroller(getContentRender(content), {
-        scrollingX: false
+        scrollingX: false,
+        scrollingY: true
       });
 
       scroller.activatePullToRefresh(50, () => {
@@ -123,6 +123,9 @@
       // setup scroller
       let rect = page.getBoundingClientRect()
       scroller.setPosition(rect.left + page.clientLeft, rect.top + page.clientTop)
+      window.$scrollerDelegate = {
+        resize: this.resize
+      };
     },
 
     methods: {

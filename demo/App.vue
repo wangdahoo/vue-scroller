@@ -51,7 +51,12 @@
           text: 'keep walking, be 2 with you.'
         });
       }
-    }
+
+      setTimeout(() => {
+        $scrollerDelegate.resize()
+      })
+    },
+
   }
 </script>
 
