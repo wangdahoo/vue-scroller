@@ -1,6 +1,6 @@
 # vue-scroller ![version](https://img.shields.io/badge/release-%20v0.1.2%20-green.svg)
 
-A Vue Component for smooth scrolling, ull to refresh & infinite loading.
+Vue component for smooth scrolling, pull to refresh & infinite loading.
 
 ## How To Use
 #### 创建vue项目, 并安装插件
