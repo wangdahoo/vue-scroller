@@ -1,12 +1,23 @@
 {
   "name": "vue-scroller",
-  "description": "A Vue.js project",
+  "version": "0.1.0",
+  "description": "A Vue Component of smooth scrolling, pull to refresh & infinite loading.",
+  "main": "release/vue-scroller.js",
   "author": "wangdahoo <157195705@qq.com>",
-  "private": true,
+  "homepage": "https://github.com/wangdahoo/vue-scroller",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --host=0.0.0.0",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "release": "cross-env webpack --config ./webpack.config.release.js --progress --hide-modules"
   },
+  "keywords": [
+    "vue",
+    "scroll",
+    "pulltorefresh",
+    "pull to refresh",
+    "pull-to-refresh",
+    "infinite load"
+  ],
   "dependencies": {
     "babel-runtime": "^6.0.0",
     "vue": "^1.0.0",
