@@ -1,5 +1,5 @@
 <template>
-  <scroller :on-refresh="refresh">
+  <scroller :on-refresh="refresh" v-ref:my_scroller>
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -8,26 +8,7 @@
   </scroller>
 </template>
 
-<style scoped>
-
-  * {
-    box-sizing: border-box;
-  }
-
-  .row {
-    width: 100%;
-    height: 50px;
-    padding: 10px 0;
-    font-size: 16px;
-    line-height: 30px;
-    text-align: center;
-    color: #444;
-    background-color: #fff;
-  }
-
-  .grey-bg {
-    background-color: #eee;
-  }
+<style>
 
 </style>
 
@@ -48,12 +29,16 @@
     ready() {
       for (let i = 0; i < 20; i++) {
         this.items.push({
-          text: parseInt(Math.random(1) * 100) +  ' - keep walking, be 2 with you.'
+          text: parseInt(Math.random(1) * 100) + ' - keep walking, be 2 with you.'
         });
       }
 
       setTimeout(() => {
-        $scrollerDelegate.resize()
+        /* 下面2种方式都可以调用 resize 方法 */
+
+        // $scrollerDelegate.resize()
+
+        this.$refs.my_scroller.resize()
       })
     },
 
@@ -61,12 +46,15 @@
       refresh() {
         setTimeout(() => {
           this.items.splice(0, 0, {
-            text: 'new - keep walking, be 2 with you.'
+            text: 'NEW - keep walking, be 2 with you.'
           })
 
+          /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
           // this.$broadcast('$finishPullToRefresh')
 
-          $scrollerDelegate.finishPullToRefresh()
+          // $scrollerDelegate.finishPullToRefresh()
+
+          this.$refs.my_scroller.finishPullToRefresh()
 
         }, 1500)
       }

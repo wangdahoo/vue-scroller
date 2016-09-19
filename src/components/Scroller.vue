@@ -5,10 +5,15 @@
        @touchend="touchEnd($event)"
   >
     <div class="content" id="{{ contentId }}">
-      <div class="pull-to-refresh-layer" :class="{'active': state == 1, 'active refreshing': state == 2}">
+      <div v-if="onRefresh" class="pull-to-refresh-layer"
+           :class="{'active': state == 1, 'active refreshing': state == 2}">
         {{ getStateText(state) }}
       </div>
       <slot></slot>
+
+      <div v-if="onInfiniteLoading" class="loading-layer" :class="{'active': showLoading}">
+        Loading...
+      </div>
     </div>
   </div>
 </template>
@@ -48,14 +53,13 @@
   }
 
   .pull-to-refresh-layer {
-    background: #7b91aa;
-    color: white;
-    font-weight: bold;
-    height: 50px;
-    margin-top: -50px;
+    width: 100%;
+    height: 60px;
+    margin-top: -60px;
     text-align: center;
     font-size: 16px;
-    line-height: 50px;
+    line-height: 60px;
+    color: #ccc;
 
     -webkit-transition: background-color 300ms;
     -moz-transition: background-color 300ms;
@@ -65,11 +69,28 @@
   }
 
   .pull-to-refresh-layer.active {
-    background: #006eb3;
+
   }
 
   .pull-to-refresh-layer.refreshing {
-    background: #00b373;
+
+  }
+
+  .loading-layer {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 60px;
+    color: #ccc;
+
+    opacity: 0;
+    transition: opacity .15s linear;
+    -webkit-transition: opacity .15s linear;
+  }
+
+  .loading-layer.active {
+    opacity: 1;
   }
 
 </style>
@@ -83,13 +104,15 @@
 
   let scroller, page, content, pullToRefreshLayer;
   let mousedown = false;
-  let scrollerDelegate;
+
+  let loadMoreTimer;
+  let scrollbottom = false;
 
   export default{
     props: {
-      onRefresh: {
-        type: Function
-      }
+      onRefresh: Function,
+      onInfiniteLoading: Function,
+
     },
 
     data(){
@@ -98,6 +121,8 @@
         contentId: content_id,
         state: 0, // 0: pull to refresh, 1: release to refresh, 2: refreshing
         stateText: 'Pull to Refresh',
+
+        showLoading: false
       }
     },
 
@@ -111,8 +136,9 @@
         scrollingY: true
       });
 
+      // enable PullToRefresh
       if (this.onRefresh) {
-        scroller.activatePullToRefresh(50, () => {
+        scroller.activatePullToRefresh(60, () => {
           this.state = 1
         }, () => {
           this.state = 0
@@ -130,6 +156,29 @@
         })
       }
 
+      // enable infinite loading
+      if (this.onInfiniteLoading) {
+        // TODO
+
+        loadMoreTimer = setInterval(() => {
+          let {left, top, zoom} = scroller.getValues()
+
+          if (top + 60 > content.offsetHeight - page.clientHeight) {
+            if (scrollbottom) return
+            scrollbottom = true
+            this.showLoading = true
+            // scroller.scrollTo(0, 50000, true)
+
+            this.onInfiniteLoading()
+
+            setTimeout(() => {
+              scrollbottom = false
+            }, 1500)
+          }
+
+        }, 20);
+      }
+
       // setup scroller
       let rect = page.getBoundingClientRect()
       scroller.setPosition(rect.left + page.clientLeft, rect.top + page.clientTop)
@@ -139,6 +188,12 @@
         finishPullToRefresh: this.finishPullToRefresh,
         triggerPullToRefresh: this.triggerPullToRefresh
       }
+    },
+
+    destroyed() {
+//      console.log('Scroller Component Destroyed.');
+
+      if (loadMoreTimer) clearInterval(loadMoreTimer);
     },
 
     methods: {
