@@ -44,7 +44,6 @@
   }
 
   .content {
-    background: #f5f5f5;
     width: 100%;
 
     -webkit-transform-origin: left top;
@@ -87,8 +86,6 @@
     opacity: 0;
     transition: opacity .15s linear;
     -webkit-transition: opacity .15s linear;
-
-    /*background-color: #f5f5f5;*/
   }
 
   .loading-layer.active {
@@ -196,7 +193,7 @@
           this.$on('$finishPullToRefresh', () => {
             setTimeout(() => {
               this.state = 0
-              scroller.finishPullToRefresh()
+              this.finishPullToRefresh()
             })
           })
 
@@ -261,6 +258,9 @@
 
       finishPullToRefresh() {
         scroller.finishPullToRefresh()
+        setTimeout(() => {
+          this.resize()
+        })
       },
 
       triggerPullToRefresh() {

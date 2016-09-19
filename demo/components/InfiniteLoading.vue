@@ -8,10 +8,6 @@
   </scroller>
 </template>
 
-<style>
-
-</style>
-
 <script>
   import {Scroller} from 'scroller'
 

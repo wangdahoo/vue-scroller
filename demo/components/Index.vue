@@ -12,6 +12,11 @@
       Infinite Loading
     </div>
 
+    <div class="item" v-link="{ path: '/both' }">
+      Both
+    </div>
+
+
   </scroller>
 </template>
 

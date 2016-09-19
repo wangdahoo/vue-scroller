@@ -1,5 +1,7 @@
 <template>
-  <scroller :on-refresh="refresh" v-ref:my_scroller>
+  <scroller :on-refresh="refresh"
+            :on-infinite-loading="loadMore"
+            v-ref:my_scroller>
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -51,6 +53,28 @@
           // $scrollerDelegate.finishPullToRefresh()
 
           this.$refs.my_scroller.finishPullToRefresh()
+
+        }, 1500)
+      },
+
+      loadMore() {
+        setTimeout(() => {
+
+          this.items = this.items.concat([
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' },
+            { text: 'NEW - keep walking, be 2 with you.' }
+          ])
+          setTimeout(() => {
+            $scrollerDelegate.resize()
+          })
 
         }, 1500)
       }
