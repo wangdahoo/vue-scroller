@@ -1,5 +1,5 @@
 {
-  "name": "vue-scroller",
+  "name": "vue-scroller1",
   "version": "0.1.1",
   "description": "A Vue Component of smooth scrolling, pull to refresh & infinite loading.",
   "main": "src/index.js",
