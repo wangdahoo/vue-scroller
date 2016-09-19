@@ -2,6 +2,8 @@
 
 Vue component for smooth scrolling, pull to refresh & infinite loading.
 
+## [Demo](https://wangdahoo.github.io/vue-scroller/)
+
 ## How To Use
 #### 创建vue项目, 并安装插件
 ```bash
