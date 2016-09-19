@@ -1,8 +1,8 @@
 {
   "name": "vue-scroller",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Vue Component of smooth scrolling, pull to refresh & infinite loading.",
-  "main": "release/vue-scroller.js",
+  "main": "src/index.js",
   "author": "wangdahoo <157195705@qq.com>",
   "homepage": "https://github.com/wangdahoo/vue-scroller",
   "scripts": {
