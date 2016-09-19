@@ -1,5 +1,5 @@
 <template>
-  <scroller>
+  <scroller :on-refresh="refresh">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -32,7 +32,7 @@
 </style>
 
 <script>
-  import { Scroller } from 'scroller'
+  import {Scroller} from 'scroller'
 
   export default {
     components: {
@@ -46,9 +46,9 @@
     },
 
     ready() {
-      for (let i=0; i<20; i++) {
+      for (let i = 0; i < 20; i++) {
         this.items.push({
-          text: 'keep walking, be 2 with you.'
+          text: parseInt(Math.random(1) * 100) +  ' - keep walking, be 2 with you.'
         });
       }
 
@@ -56,6 +56,21 @@
         $scrollerDelegate.resize()
       })
     },
+
+    methods: {
+      refresh() {
+        setTimeout(() => {
+          this.items.splice(0, 0, {
+            text: 'new - keep walking, be 2 with you.'
+          })
+
+          // this.$broadcast('$finishPullToRefresh')
+
+          $scrollerDelegate.finishPullToRefresh()
+
+        }, 1500)
+      }
+    }
 
   }
 </script>

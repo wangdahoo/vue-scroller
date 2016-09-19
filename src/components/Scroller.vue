@@ -83,10 +83,13 @@
 
   let scroller, page, content, pullToRefreshLayer;
   let mousedown = false;
+  let scrollerDelegate;
 
   export default{
     props: {
-
+      onRefresh: {
+        type: Function
+      }
     },
 
     data(){
@@ -108,24 +111,34 @@
         scrollingY: true
       });
 
-      scroller.activatePullToRefresh(50, () => {
-        this.state = 1
-      }, () => {
-        this.state = 0
-      }, () => {
-        this.state = 2
-        setTimeout(() => {
-          this.state = 0;
-          scroller.finishPullToRefresh()
-        }, 2000)
-      })
+      if (this.onRefresh) {
+        scroller.activatePullToRefresh(50, () => {
+          this.state = 1
+        }, () => {
+          this.state = 0
+        }, () => {
+          this.state = 2
+
+          this.$on('$finishPullToRefresh', () => {
+            setTimeout(() => {
+              this.state = 0
+              scroller.finishPullToRefresh()
+            })
+          })
+
+          this.onRefresh()
+        })
+      }
 
       // setup scroller
       let rect = page.getBoundingClientRect()
       scroller.setPosition(rect.left + page.clientLeft, rect.top + page.clientTop)
+
       window.$scrollerDelegate = {
-        resize: this.resize
-      };
+        resize: this.resize,
+        finishPullToRefresh: this.finishPullToRefresh,
+        triggerPullToRefresh: this.triggerPullToRefresh
+      }
     },
 
     methods: {
@@ -141,6 +154,22 @@
 
       resize() {
         scroller.setDimensions(page.clientWidth, page.clientHeight, content.offsetWidth, content.offsetHeight);
+      },
+
+      finishPullToRefresh() {
+        scroller.finishPullToRefresh()
+      },
+
+      triggerPullToRefresh() {
+        scroller.triggerPullToRefresh()
+      },
+
+      scrollTo(x, y, animate) {
+        scroller.scrollTo(x, y, animate)
+      },
+
+      scrollBy(x, y, animate) {
+        scroller.scrollBy(x, y, animate)
       },
 
       touchStart(e) {
