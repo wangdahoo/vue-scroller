@@ -4,7 +4,7 @@
        @touchmove="touchMove($event)"
        @touchend="touchEnd($event)"
   >
-    <div class="content" id="{{ contentId }}">
+    <div class="page-content" id="{{ contentId }}">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
            :class="{'active': state == 1, 'active refreshing': state == 2}">
         <span class="spinner">
@@ -43,7 +43,7 @@
     user-select: none;
   }
 
-  .content {
+  .page-content {
     width: 100%;
 
     -webkit-transform-origin: left top;
@@ -125,7 +125,7 @@
     transform: translate3d(0,0,0) rotate(0deg);
 
     transition: transform .2s linear;
-    transition: -webkit-transform .2s linear;
+    -webkit-transition: -webkit-transform .2s linear;
   }
 
   .pull-to-refresh-layer.active > .spinner > .arrow

@@ -6,6 +6,7 @@ import Index from './components/Index.vue'
 import PullToRefresh from './components/PullToRefresh.vue'
 import InfiniteLoading from './components/InfiniteLoading.vue'
 import Both from './components/Both.vue'
+import PullToRefresh2 from './components/PullToRefresh2.vue'
 
 const routers = {
   '/index': {
@@ -22,7 +23,11 @@ const routers = {
 
   '/both': {
     component: Both
-  }
+  },
+
+  '/pullToRefresh2': {
+    component: PullToRefresh2
+  },
 }
 
 let router = new VueRouter({

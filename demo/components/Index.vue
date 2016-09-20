@@ -16,6 +16,10 @@
       Both
     </div>
 
+    <div class="item" v-link="{ path: '/pullToRefresh2' }">
+      Pull to Refresh - 自定义
+    </div>
+
 
   </scroller>
 </template>
