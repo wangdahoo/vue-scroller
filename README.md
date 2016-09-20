@@ -14,7 +14,7 @@ $ npm install vue-scroller
 ```
 
 #### 在webpack.config.js中添加resolve和loader
-```
+```js
 module.exports = {
   ...
   
@@ -42,7 +42,7 @@ module.exports = {
 ```
 
 #### 粘贴下面代码覆盖 App.vue
-```
+```vue
 <template>
   <scroller :on-refresh="refresh"
             :on-infinite-loading="loadMore"
@@ -148,8 +148,13 @@ module.exports = {
 </script>
 ```
 
-#### 运行
+#### 在index.html中添加
+```html
+<meta name="viewport" content="width=device-width, user-scalable=no">
 ```
+
+#### 运行
+```bash
 $ npm run dev
 ```
 
