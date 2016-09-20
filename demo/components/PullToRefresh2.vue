@@ -10,23 +10,24 @@
 
 <style>
 
-  .my-scroller .pull-to-refresh-layer .spinner {
+  .my-scroller .pull-to-refresh-layer .spinner-holder
+  {
     visibility: hidden;
   }
 
   .my-scroller .pull-to-refresh-layer {
-    background-image: url(http://qianka.b0.upaiyun.com/images/347fca6e228c5a198ed21e7ab3222978.png);
+    background-image: url(http://qianka.b0.upaiyun.com/images/4f013b6bc7d96fc347f416ad3673f937.png);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 32px 25px;
+    background-size: 30px 30px;
 
     -webkit-transform: scale(1);
     transform: scale(1);
   }
 
   .my-scroller .pull-to-refresh-layer.active {
-    -webkit-transform: scale(2);
-    transform: scale(2);
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
 
     transition: transform .1s linear;
     -webkit-transition: -webkit-transform .1s linear;

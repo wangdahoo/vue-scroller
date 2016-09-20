@@ -1,5 +1,5 @@
 <template>
-  <scroller :on-infinite-loading="loadMore">
+  <scroller :on-infinite="loadMore">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">

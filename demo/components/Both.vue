@@ -1,6 +1,6 @@
 <template>
   <scroller :on-refresh="refresh"
-            :on-infinite-loading="loadMore"
+            :on-infinite="loadMore"
             v-ref:my_scroller>
     <div v-for="(index, item) in items"
          class="row"
