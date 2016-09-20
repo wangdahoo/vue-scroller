@@ -11,18 +11,37 @@ $ vue init webpack-simple#1.0 my-project
 $ cd my-project
 $ npm install
 $ npm install vue-scroller
-$ npm run dev
 ```
 
-#### 在webpack.config.js中添加loader
+#### 在webpack.config.js中添加resolve和loader
 ```
-{
-  test: /vue-scroller.src.*?js$/,
-  loader: 'babel'
+module.exports = {
+  ...
+  
+  resolve: {
+    extensions: ['', '.js', '.vue'],
+    fallback: [path.join(__dirname, './node_modules')]
+  },
+
+  ...
+  
+  module: {
+    loaders: [
+      ...
+      
+      {
+        test: /vue-scroller.src.*?js$/,
+        loader: 'babel'
+      }
+    ]
+  },
+  
+  ...
+
 }
 ```
 
-#### 在组件中使用
+#### 粘贴下面代码覆盖 App.vue
 ```
 <template>
   <scroller :on-refresh="refresh"
@@ -35,6 +54,25 @@ $ npm run dev
     </div>
   </scroller>
 </template>
+
+<style>
+
+  .row {
+    width: 100%;
+    height: 50px;
+    padding: 10px 0;
+    font-size: 16px;
+    line-height: 30px;
+    text-align: center;
+    color: #444;
+    background-color: #fff;
+  }
+
+  .grey-bg {
+    background-color: #eee;
+  }
+
+</style>
 
 <script>
   import {Scroller} from 'vue-scroller'
@@ -108,6 +146,11 @@ $ npm run dev
 
   }
 </script>
+```
+
+#### 运行
+```
+$ npm run dev
 ```
 
 That's it, have fun.
