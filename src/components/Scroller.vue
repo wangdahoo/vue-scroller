@@ -108,14 +108,14 @@
   .spinner img {
     width: 20px;
     height: 20px;
-    margin: 10px auto 0 auto;
+    margin: 8px auto 0 auto;
   }
 
   .spinner span {
     display: block;
     margin: 0 auto;
     font-size: 14px;
-    line-height: 25px;
+    line-height: 28px;
     color: #aaa;
   }
 
