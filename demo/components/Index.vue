@@ -1,7 +1,7 @@
 <template>
   <scroller>
     <h1 class="title">
-      Vue Scroller
+      vue scroller
     </h1>
 
     <div class="row grey-bg" v-link="{ path: '/smoothingScroll' }">
@@ -31,7 +31,7 @@
 
   .title {
     text-align: center;
-    color: #ec4949;
+    color: #666;
 
     font-style: normal;
     font-variant-ligatures: normal;
@@ -39,7 +39,7 @@
     font-variant-numeric: normal;
     font-weight: normal;
     font-stretch: normal;
-    font-size: 50px;
+    font-size: 30px;
     line-height: normal;
     font-family: Italiana, sans-serif;
 
