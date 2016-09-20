@@ -27,6 +27,10 @@
 </template>
 <style scoped>
 
+  * {
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+
   ._container {
     width: 100%;
     height: 100%;
@@ -34,8 +38,6 @@
     top: 0;
     left: 0;
     overflow: hidden;
-    font-family: sans-serif;
-    cursor: default;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -221,7 +223,7 @@
             }, 1500)
           }
 
-        }, 20);
+        }, 10);
       }
 
       // setup scroller
@@ -284,6 +286,7 @@
       },
 
       touchMove(e) {
+        e.preventDefault()
         scroller.doTouchMove(e.touches, e.timeStamp)
       },
 

@@ -1,7 +1,7 @@
 <template>
   <scroller>
     <h1 class="title">
-      Show Cases
+      Vue Scroller
     </h1>
 
     <div class="row grey-bg" v-link="{ path: '/smoothingScroll' }">
@@ -32,6 +32,17 @@
   .title {
     text-align: center;
     color: #ec4949;
+
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    font-stretch: normal;
+    font-size: 50px;
+    line-height: normal;
+    font-family: Italiana, sans-serif;
+
   }
 
   .row {
