@@ -16,18 +16,18 @@ $ npm install vue-scroller
 #### 在webpack.config.js中添加resolve和loader
 ```js
 module.exports = {
-  ...
+  // ...
   
   resolve: {
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, './node_modules')]
   },
 
-  ...
+  // ...
   
   module: {
     loaders: [
-      ...
+      // ...
       
       {
         test: /vue-scroller.src.*?js$/,
@@ -36,7 +36,7 @@ module.exports = {
     ]
   },
   
-  ...
+  // ...
 
 }
 ```
