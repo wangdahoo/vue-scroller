@@ -110,7 +110,7 @@
     display: block;
     margin: 0 auto;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 20px;
     color: #aaa;
   }
 
