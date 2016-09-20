@@ -1,10 +1,11 @@
 <template>
-  <div class="page" id="{{ pageId }}"
+  <div class="_container" id="{{ containerId }}"
        @touchstart="touchStart($event)"
        @touchmove="touchMove($event)"
        @touchend="touchEnd($event)"
   >
-    <div class="page-content" id="{{ contentId }}">
+
+    <div class="_content" id="{{ contentId }}">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
            :class="{'active': state == 1, 'active refreshing': state == 2}">
         <span class="spinner-holder">
@@ -26,7 +27,7 @@
 </template>
 <style scoped>
 
-  .page {
+  ._container {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -43,7 +44,7 @@
     user-select: none;
   }
 
-  .page-content {
+  ._content {
     width: 100%;
 
     -webkit-transform-origin: left top;
@@ -134,20 +135,21 @@
 
 </style>
 <script>
-  import uuid from 'node-uuid'
   import '../module/core'
   import getContentRender from '../module/render'
 
-  const page_id = 'page-' + uuid.v4().substr(0, 8)
-  const content_id = 'content-' + uuid.v4().substr(0, 8)
+  const container_id = 'outer-' + Math.random().toString(36).substring(3, 8);
+  const content_id = 'inner-' + Math.random().toString(36).substring(3, 8);
 
-  let scroller, page, content, pullToRefreshLayer;
+  let scroller, container, content, pullToRefreshLayer;
   let mousedown = false;
 
   let loadMoreTimer;
   let scrollbottom = false;
 
   export default{
+    name: 'scroller',
+
     props: {
       onRefresh: Function,
       onInfinite: Function,
@@ -160,7 +162,7 @@
 
     data(){
       return {
-        pageId: page_id,
+        containerId: container_id,
         contentId: content_id,
         state: 0, // 0: pull to refresh, 1: release to refresh, 2: refreshing
         stateText: 'Pull to Refresh',
@@ -170,7 +172,7 @@
     },
 
     ready() {
-      page = document.getElementById(this.pageId)
+      container = document.getElementById(this.containerId)
       content = document.getElementById(this.contentId)
       pullToRefreshLayer = content.getElementsByTagName("div")[0]
 
@@ -206,7 +208,7 @@
         loadMoreTimer = setInterval(() => {
           let {left, top, zoom} = scroller.getValues()
 
-          if (top + 60 > content.offsetHeight - page.clientHeight) {
+          if (top + 60 > content.offsetHeight - container.clientHeight) {
             if (scrollbottom) return
             scrollbottom = true
             this.showLoading = true
@@ -223,8 +225,8 @@
       }
 
       // setup scroller
-      let rect = page.getBoundingClientRect()
-      scroller.setPosition(rect.left + page.clientLeft, rect.top + page.clientTop)
+      let rect = container.getBoundingClientRect()
+      scroller.setPosition(rect.left + container.clientLeft, rect.top + container.clientTop)
 
       window.$scrollerDelegate = {
         resize: this.resize,
@@ -251,7 +253,7 @@
       },
 
       resize() {
-        scroller.setDimensions(page.clientWidth, page.clientHeight, content.offsetWidth, content.offsetHeight);
+        scroller.setDimensions(container.clientWidth, container.clientHeight, content.offsetWidth, content.offsetHeight);
       },
 
       finishPullToRefresh() {
@@ -279,7 +281,6 @@
           return
         }
         scroller.doTouchStart(e.touches, e.timeStamp)
-        e.preventDefault()
       },
 
       touchMove(e) {

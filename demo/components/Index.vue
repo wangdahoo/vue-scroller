@@ -1,25 +1,20 @@
 <template>
   <scroller>
-    <div class="title">
+    <h1 class="title">
       Show Cases
+    </h1>
+
+    <div class="row grey-bg" v-link="{ path: '/smoothingScroll' }">
+      Smooth Scrolling
     </div>
 
-    <div class="item" v-link="{ path: '/pullToRefresh' }">
-      Pull to Refresh
+    <div class="row" v-link="{ path: '/refreshAndInfinite' }">
+      Refresh & Infinite
     </div>
 
-    <div class="item" v-link="{ path: '/infiniteLoading' }">
-      Infinite Loading
+    <div class="row grey-bg" v-link="{ path: '/custom' }">
+      陈妍希
     </div>
-
-    <div class="item" v-link="{ path: '/both' }">
-      Both
-    </div>
-
-    <div class="item" v-link="{ path: '/pullToRefresh2' }">
-      Pull to Refresh - 自定义
-    </div>
-
 
   </scroller>
 </template>
@@ -34,21 +29,9 @@
     box-sizing: border-box;
   }
 
-  .title, .item {
-    width: 100%;
-    height: 50px;
-    font-size: 16px;
-    line-height: 30px;
-    color: #444;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-bottom: 1px solid #ddd;
-  }
-
   .title {
     text-align: center;
-    background-color: #fff;
-    padding: 10px 0;
+    color: #ec4949;
   }
 
   .row {
@@ -67,23 +50,4 @@
   }
 
 </style>
-
-<script>
-
-  export default {
-    components: {},
-
-    data () {
-      return {}
-    },
-
-    ready() {
-
-    },
-
-    methods: {}
-
-  }
-</script>
-
 

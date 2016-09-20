@@ -3,30 +3,25 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Index from './components/Index.vue'
-import PullToRefresh from './components/PullToRefresh.vue'
-import InfiniteLoading from './components/InfiniteLoading.vue'
-import Both from './components/Both.vue'
-import PullToRefresh2 from './components/PullToRefresh2.vue'
+import RefreshAndInfinite from './components/RefreshAndInfinite.vue'
+import SmoothingScroll from './components/SmoothingScroll.vue'
+import Custom from './components/Custom.vue'
 
 const routers = {
   '/index': {
     component: Index
   },
 
-  '/pullToRefresh': {
-    component: PullToRefresh
+  '/refreshAndInfinite': {
+    component: RefreshAndInfinite
   },
 
-  '/infiniteLoading': {
-    component: InfiniteLoading
+  '/smoothingScroll': {
+    component: SmoothingScroll
   },
 
-  '/both': {
-    component: Both
-  },
-
-  '/pullToRefresh2': {
-    component: PullToRefresh2
+  '/custom': {
+    component: Custom
   },
 }
 

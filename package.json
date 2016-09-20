@@ -1,6 +1,6 @@
 {
   "name": "vue-scroller",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Vue component for smooth scrolling, pull to refresh & infinite loading.",
   "main": "src/index.js",
   "author": "wangdahoo <157195705@qq.com>",
@@ -20,7 +20,6 @@
   ],
   "dependencies": {
     "babel-runtime": "^6.0.0",
-    "node-uuid": "^1.4.7",
     "vue": "^1.0.0"
   },
   "devDependencies": {
