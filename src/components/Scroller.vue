@@ -11,7 +11,7 @@
         <span class="spinner-holder">
           <img class="arrow" v-if="state != 2" src="../assets/arrow.svg">
           <span class="text" v-if="state != 2">{{ refreshText }}</span>
-          <img class="spinner" v-if="state == 2" src="../assets/spinner.svg">
+          <spinner class="spinner" v-if="state == 2"></spinner>
         </span>
       </div>
 
@@ -19,7 +19,7 @@
 
       <div v-if="onInfinite" class="loading-layer" :class="{'active': showLoading}">
         <span class="spinner-holder">
-          <img class="spinner" src="../assets/spinner.svg">
+          <spinner class="spinner"></spinner>
         </span>
       </div>
     </div>
@@ -135,10 +135,16 @@
     transform: translate3d(0,0,0) rotate(180deg);
   }
 
+  .spinner {
+    fill: #444;
+    stroke: #69717d;
+  }
+
 </style>
 <script>
   import '../module/core'
   import getContentRender from '../module/render'
+  import Spinner from './Spinner'
 
   const container_id = 'outer-' + Math.random().toString(36).substring(3, 8);
   const content_id = 'inner-' + Math.random().toString(36).substring(3, 8);
@@ -149,8 +155,12 @@
   let loadMoreTimer;
   let scrollbottom = false;
 
-  export default{
+  export default {
     name: 'scroller',
+
+    components: {
+      Spinner
+    },
 
     props: {
       onRefresh: Function,
