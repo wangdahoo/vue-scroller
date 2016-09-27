@@ -142,6 +142,12 @@
 
 </style>
 <script>
+
+  import accessor from '../module/accessor'
+  if (!(window.$scroller && window.$scroller.name == 'vue_scroller_accessor')) {
+    window.$scroller = accessor
+  }
+
   import Scroller from '../module/core'
   import getContentRender from '../module/render'
   import Spinner from './Spinner'
@@ -156,7 +162,6 @@
   let scrollbottom = false;
 
   export default {
-    name: 'scroller',
 
     components: {
       Spinner
@@ -170,6 +175,11 @@
         type: Text,
         default: '下拉刷新'
       },
+
+      id: {
+        type: String,
+        required: true
+      }
     },
 
     data(){
@@ -240,11 +250,15 @@
       let rect = container.getBoundingClientRect()
       scroller.setPosition(rect.left + container.clientLeft, rect.top + container.clientTop)
 
-      window.$scrollerDelegate = {
+      let delegate = {
         resize: this.resize,
         finishPullToRefresh: this.finishPullToRefresh,
-        triggerPullToRefresh: this.triggerPullToRefresh
+        triggerPullToRefresh: this.triggerPullToRefresh,
+        scrollTo: this.scrollTo,
+        scrollBy: this.scrollBy
       }
+
+      window.$scroller.add(this.id, delegate)
     },
 
     destroyed() {
@@ -254,16 +268,6 @@
     },
 
     methods: {
-      getStateText(state) {
-        if (state == 1) {
-          return 'Release to Refresh'
-        } else if (state == 2) {
-          return 'Refreshing...'
-        } else {
-          return 'Pull to Refresh'
-        }
-      },
-
       resize() {
         scroller.setDimensions(container.clientWidth, container.clientHeight, content.offsetWidth, content.offsetHeight);
       },

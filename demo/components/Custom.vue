@@ -1,5 +1,6 @@
 <template>
-  <scroller :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
+  <scroller id="customScroller"
+    :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -60,10 +61,6 @@
       this.bottom = 20
 
       setTimeout(() => {
-        /* 下面2种方式都可以调用 resize 方法 */
-
-        // $scrollerDelegate.resize()
-
         this.$refs.my_scroller.resize()
       })
     },
@@ -72,19 +69,12 @@
       refresh() {
         setTimeout(() => {
           let start = this.top - 1
-
           for (let i = start; i > start - 10; i--) {
             this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
           }
-
           this.top = this.top - 10;
 
-          /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
-
           this.$broadcast('$finishPullToRefresh')
-          // $scrollerDelegate.finishPullToRefresh()
-          // this.$refs.my_scroller.finishPullToRefresh()
-
         }, 1500)
       },
     }

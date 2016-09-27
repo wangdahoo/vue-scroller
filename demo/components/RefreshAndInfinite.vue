@@ -1,5 +1,6 @@
 <template>
-  <scroller :on-refresh="refresh"
+  <scroller id="myScroller"
+            :on-refresh="refresh"
             :on-infinite="loadMore"
             v-ref:my_scroller>
     <div v-for="(index, item) in items" @click="onItemClick(index, item)"
@@ -33,10 +34,11 @@
 
       setTimeout(() => {
         /* 下面2种方式都可以调用 resize 方法 */
+        // 1. use scroller accessor
+        $scroller.get('myScroller').resize()
 
-        // $scrollerDelegate.resize()
-
-        this.$refs.my_scroller.resize()
+        // 2. use component ref
+        // this.$refs.my_scroller.resize()
       })
     },
 
@@ -53,8 +55,8 @@
 
           /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
 
-          this.$broadcast('$finishPullToRefresh')
-          // $scrollerDelegate.finishPullToRefresh()
+          // this.$broadcast('$finishPullToRefresh')
+          $scroller.get('myScroller').finishPullToRefresh()
           // this.$refs.my_scroller.finishPullToRefresh()
 
         }, 1500)
@@ -71,9 +73,8 @@
 
           this.bottom = this.bottom + 10;
 
-
           setTimeout(() => {
-            $scrollerDelegate.resize()
+            $scroller.get('myScroller').resize()
           })
         }, 1500)
       },
