@@ -44,6 +44,11 @@ module.exports = {
       }
     ]
   },
+  vue: {
+    loaders: {
+      scss: 'style!css!sass',
+    }
+  },
   devtool: '#source-map',
   plugins: [
     new webpack.DefinePlugin({

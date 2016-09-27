@@ -1,11 +1,11 @@
 <template>
-  <div class="_container" id="{{ containerId }}"
+  <div class="_v-container" id="{{ containerId }}"
        @touchstart="touchStart($event)"
        @touchmove="touchMove($event)"
        @touchend="touchEnd($event)"
   >
 
-    <div class="_content" id="{{ contentId }}">
+    <div class="_v-content" id="{{ contentId }}">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
            :class="{'active': state == 1, 'active refreshing': state == 2}">
         <span class="spinner-holder">
@@ -25,13 +25,11 @@
     </div>
   </div>
 </template>
-<style scoped>
+<style lang="scss" scoped>
 
-  * {
+  ._v-container {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
-  }
 
-  ._container {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -44,105 +42,107 @@
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
-  }
 
-  ._content {
-    width: 100%;
+    ._v-content {
+      width: 100%;
 
-    -webkit-transform-origin: left top;
-    -webkit-transform: translateZ(0);
-    -moz-transform-origin: left top;
-    -moz-transform: translateZ(0);
-    -ms-transform-origin: left top;
-    -ms-transform: translateZ(0);
-    -o-transform-origin: left top;
-    -o-transform: translateZ(0);
-    transform-origin: left top;
-    transform: translateZ(0);
-  }
+      -webkit-transform-origin: left top;
+      -webkit-transform: translateZ(0);
+      -moz-transform-origin: left top;
+      -moz-transform: translateZ(0);
+      -ms-transform-origin: left top;
+      -ms-transform: translateZ(0);
+      -o-transform-origin: left top;
+      -o-transform: translateZ(0);
+      transform-origin: left top;
+      transform: translateZ(0);
 
-  .pull-to-refresh-layer {
-    width: 100%;
-    height: 60px;
-    margin-top: -60px;
-    text-align: center;
-    font-size: 16px;
-    color: #ccc;
-  }
+      .pull-to-refresh-layer {
+        width: 100%;
+        height: 60px;
+        margin-top: -60px;
+        text-align: center;
+        font-size: 16px;
+        color: #ccc;
 
-  .pull-to-refresh-layer.active {
+        &.active {
+          // no style
+        }
 
-  }
+        &.refreshing {
+          // no style
+        }
+      }
 
-  .pull-to-refresh-layer.refreshing {
+      .loading-layer {
+        width: 100%;
+        height: 60px;
+        text-align: center;
+        font-size: 16px;
+        line-height: 60px;
+        color: #ccc;
 
-  }
+        opacity: 0;
+        transition: opacity .15s linear;
+        -webkit-transition: opacity .15s linear;
 
-  .loading-layer {
-    width: 100%;
-    height: 60px;
-    text-align: center;
-    font-size: 16px;
-    line-height: 60px;
-    color: #ccc;
+        &.active {
+          opacity: 1;
+        }
+      }
 
-    opacity: 0;
-    transition: opacity .15s linear;
-    -webkit-transition: opacity .15s linear;
-  }
+      /* spinner & arrow */
+      .pull-to-refresh-layer, .loading-layer {
 
-  .loading-layer.active {
-    opacity: 1;
-  }
+        .spinner-holder {
+          text-align: center;
+          -webkit-font-smoothing: antialiased;
 
-  .spinner-holder {
-    text-align: center;
-    -webkit-font-smoothing: antialiased;
-  }
+          .arrow {
+            width: 20px;
+            height: 20px;
+            margin: 8px auto 0 auto;
 
-  .spinner-holder .arrow {
-    width: 20px;
-    height: 20px;
-    margin: 8px auto 0 auto;
-  }
+            -webkit-transform: translate3d(0,0,0) rotate(0deg);
+            transform: translate3d(0,0,0) rotate(0deg);
 
-  .spinner-holder .text {
-    display: block;
-    margin: 0 auto;
-    font-size: 14px;
-    line-height: 20px;
-    color: #aaa;
-  }
+            -webkit-transition: -webkit-transform .2s linear;
+            transition: transform .2s linear;
+          }
 
-  .spinner-holder .spinner {
-    margin-top: 14px;
-    width: 32px;
-    height: 32px;
-  }
+          .text {
+            display: block;
+            margin: 0 auto;
+            font-size: 14px;
+            line-height: 20px;
+            color: #aaa;
+          }
 
-  .pull-to-refresh-layer > .spinner-holder > .arrow
-  {
-    -webkit-transform: translate3d(0,0,0) rotate(0deg);
-    transform: translate3d(0,0,0) rotate(0deg);
+          .spinner {
+            margin-top: 14px;
+            width: 32px;
+            height: 32px;
 
-    transition: transform .2s linear;
-    -webkit-transition: -webkit-transform .2s linear;
-  }
+            // svg style
+            fill: #444;
+            stroke: #69717d;
+          }
+        }
 
-  .pull-to-refresh-layer.active > .spinner-holder > .arrow
-  {
-    -webkit-transform: translate3d(0,0,0) rotate(180deg);
-    transform: translate3d(0,0,0) rotate(180deg);
-  }
+        &.active .spinner-holder {
+          .arrow {
+            -webkit-transform: translate3d(0,0,0) rotate(180deg);
+            transform: translate3d(0,0,0) rotate(180deg);
+          }
+        }
+      }
 
-  .spinner {
-    fill: #444;
-    stroke: #69717d;
+    }
   }
 
 </style>
 <script>
-  import '../module/core'
+  import Scroller from '../module/core'
   import getContentRender from '../module/render'
   import Spinner from './Spinner'
 

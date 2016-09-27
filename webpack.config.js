@@ -51,6 +51,11 @@ module.exports = {
       }
     ]
   },
+  vue: {
+    loaders: {
+      scss: 'style!css!sass',
+    }
+  },
   devServer: {
     historyApiFallback: true,
     noInfo: true

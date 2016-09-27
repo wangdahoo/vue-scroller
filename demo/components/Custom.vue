@@ -39,7 +39,7 @@
 
 
 <script>
-  import {Scroller} from 'scroller'
+  import Scroller from 'scroller'
 
   export default {
     components: {

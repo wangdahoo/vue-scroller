@@ -6,7 +6,7 @@
   "author": "wangdahoo <157195705@qq.com>",
   "homepage": "https://github.com/wangdahoo/vue-scroller",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --host=0.0.0.0",
+    "dev": "webpack-dev-server --inline --hot --host=0.0.0.0 --port=8000",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "release": "cross-env webpack --config ./webpack.config.release.js --progress --hide-modules"
   },
@@ -23,7 +23,6 @@
     "vue": "^1.0.0"
   },
   "devDependencies": {
-    "vue-router": "^0.7.13",
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-plugin-transform-runtime": "^6.0.0",
@@ -33,10 +32,14 @@
     "css-loader": "^0.23.0",
     "file-loader": "^0.8.4",
     "json-loader": "^0.5.4",
+    "node-sass": "^3.10.0",
+    "sass-loader": "^4.0.2",
+    "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.2.1",
+    "vue-router": "^0.7.13",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
