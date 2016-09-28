@@ -1316,8 +1316,7 @@ var Scroller;
 				};
 
 				// When continuing based on previous animation we choose an ease-out animation instead of ease-in-out
-        console.log('===== Animate Start, Core ID: ' + core.id + ' =====');
-				self.__isAnimating = core.effect.Animate.start(step, verify, completed, self.options.animationDuration, wasAnimating ? easeOutCubic : easeInOutCubic);
+        self.__isAnimating = core.effect.Animate.start(step, verify, completed, self.options.animationDuration, wasAnimating ? easeOutCubic : easeInOutCubic);
 
 			} else {
 

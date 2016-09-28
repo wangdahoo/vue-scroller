@@ -1,4 +1,4 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.1%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.3%20-green.svg)
 
 Vue component for smooth scrolling, pull to refresh & infinite loading.
 
@@ -44,8 +44,9 @@ module.exports = {
 #### 粘贴下面代码覆盖 App.vue
 ```vue
 <template>
-  <scroller :on-refresh="refresh"
-            :on-infinite="infinite"
+  <scroller delegate-id="myScroller"
+            :on-refresh="refresh"
+            :on-infinite="loadMore"
             v-ref:my_scroller>
     <div v-for="(index, item) in items" @click="onItemClick(index, item)"
          class="row" :class="{'grey-bg': index % 2 == 0}">
@@ -55,7 +56,7 @@ module.exports = {
 </template>
 
 <script>
-  import {Scroller} from 'vue-scroller'
+  import Scroller from 'vue-scroller'
 
   export default {
     components: {
@@ -78,10 +79,11 @@ module.exports = {
 
       setTimeout(() => {
         /* 下面2种方式都可以调用 resize 方法 */
+        // 1. use scroller accessor
+        $scroller.get('myScroller').resize()
 
-        // $scrollerDelegate.resize()
-
-        this.$refs.my_scroller.resize()
+        // 2. use component ref
+        // this.$refs.my_scroller.resize()
       })
     },
 
@@ -98,14 +100,14 @@ module.exports = {
 
           /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
 
-          this.$broadcast('$finishPullToRefresh')
-          // $scrollerDelegate.finishPullToRefresh()
+          // this.$broadcast('$finishPullToRefresh')
+          $scroller.get('myScroller').finishPullToRefresh()
           // this.$refs.my_scroller.finishPullToRefresh()
 
         }, 1500)
       },
 
-      infinite() {
+      loadMore() {
         setTimeout(() => {
 
           let start = this.bottom + 1
@@ -116,9 +118,8 @@ module.exports = {
 
           this.bottom = this.bottom + 10;
 
-
           setTimeout(() => {
-            $scrollerDelegate.resize()
+            $scroller.get('myScroller').resize()
           })
         }, 1500)
       },
@@ -132,6 +133,13 @@ module.exports = {
 </script>
 
 <style>
+  html, body {
+    margin: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
 
   .row {
     width: 100%;
@@ -147,7 +155,6 @@ module.exports = {
   .grey-bg {
     background-color: #eee;
   }
-
 </style>
 ```
 
