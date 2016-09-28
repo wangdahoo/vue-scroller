@@ -1,4 +1,4 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.2.3%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.0%20-green.svg)
 
 Vue component for smooth scrolling, pull to refresh & infinite loading.
 
@@ -45,7 +45,7 @@ module.exports = {
 ```vue
 <template>
   <scroller :on-refresh="refresh"
-            :on-infinite="loadMore"
+            :on-infinite="infinite"
             v-ref:my_scroller>
     <div v-for="(index, item) in items" @click="onItemClick(index, item)"
          class="row" :class="{'grey-bg': index % 2 == 0}">
@@ -105,7 +105,7 @@ module.exports = {
         }, 1500)
       },
 
-      loadMore() {
+      infinite() {
         setTimeout(() => {
 
           let start = this.bottom + 1
