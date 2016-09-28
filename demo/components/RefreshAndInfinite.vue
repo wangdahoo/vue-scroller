@@ -1,5 +1,5 @@
 <template>
-  <scroller id="myScroller"
+  <scroller delegate-id="myScroller"
             :on-refresh="refresh"
             :on-infinite="loadMore"
             v-ref:my_scroller>

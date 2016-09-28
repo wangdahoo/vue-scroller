@@ -3,11 +3,13 @@
   function Accessor() { this.scrollers = {}; this.name = 'vue_scroller_accessor' }
 
   Accessor.prototype.add = function (id, scroller) {
-    if (id in this.scrollers) throw '重复的scroller id';
+    if (id in this.scrollers && document.querySelector('[' + id + ']')) {
+      throw '重复的scroller id';
+    }
     this.scrollers[id] = scroller
   };
 
-  Accessor.prototype.get = function (id) {
+  Accessor.prototype.delegate = Accessor.prototype.get = function (id) {
     if (id in this.scrollers) {
       return this.scrollers[id];
     } else {

@@ -6,6 +6,7 @@ import Index from './components/Index.vue'
 import RefreshAndInfinite from './components/RefreshAndInfinite.vue'
 import SmoothingScroll from './components/SmoothingScroll.vue'
 import Custom from './components/Custom.vue'
+import MultiScrollers from './components/MultiScrollers.vue'
 
 const routers = {
   '/index': {
@@ -15,7 +16,6 @@ const routers = {
   '/refreshAndInfinite': {
     component: RefreshAndInfinite
   },
-
   '/smoothingScroll': {
     component: SmoothingScroll
   },
@@ -23,6 +23,11 @@ const routers = {
   '/custom': {
     component: Custom
   },
+
+  '/multiScrollers': {
+    component: MultiScrollers
+  },
+
 }
 
 let router = new VueRouter({

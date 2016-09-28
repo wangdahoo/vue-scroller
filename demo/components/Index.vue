@@ -12,7 +12,11 @@
       Refresh & Infinite
     </div>
 
-    <div class="row grey-bg" v-link="{ path: '/custom' }">
+    <div class="row grey-bg" v-link="{ path: '/multiScrollers' }">
+      Multi Scrollers
+    </div>
+
+    <div class="row" v-link="{ path: '/custom' }">
       陈妍希
     </div>
 

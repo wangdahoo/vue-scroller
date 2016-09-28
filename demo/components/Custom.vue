@@ -1,5 +1,5 @@
 <template>
-  <scroller id="customScroller"
+  <scroller delegate-id="customScroller"
     :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
     <div v-for="(index, item) in items"
          class="row"

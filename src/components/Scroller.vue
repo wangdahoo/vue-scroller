@@ -148,18 +148,19 @@
     window.$scroller = accessor
   }
 
-  import Scroller from '../module/core'
+  import Animate from '../module/animate'
+  import Scroller from '../module/scroller'
   import getContentRender from '../module/render'
   import Spinner from './Spinner'
 
-  const container_id = 'outer-' + Math.random().toString(36).substring(3, 8);
-  const content_id = 'inner-' + Math.random().toString(36).substring(3, 8);
+  function widthAndHeightCoerce(v) {
+    if (v[v.length - 1] != '%') return v + 'px'
+    return v
+  }
 
-  let scroller, container, content, pullToRefreshLayer;
-  let mousedown = false;
-
-  let loadMoreTimer;
-  let scrollbottom = false;
+  function widthAndHeightValidator(v) {
+    return /^[\d]+\%?$/.test(v)
+  }
 
   export default {
 
@@ -176,36 +177,62 @@
         default: '下拉刷新'
       },
 
-      id: {
+      delegateId: { // scroller id
         type: String,
         required: true
+      },
+
+      width: {
+        type: String,
+        default: '100%',
+        validator: widthAndHeightValidator,
+        coerce: widthAndHeightCoerce
+      },
+
+      height: {
+        type: String,
+        default: '100%',
+        validator: widthAndHeightValidator,
+        coerce: widthAndHeightCoerce
       }
     },
 
     data(){
       return {
-        containerId: container_id,
-        contentId: content_id,
+        containerId: 'outer-' + Math.random().toString(36).substring(3, 8),
+        contentId: 'inner-' + Math.random().toString(36).substring(3, 8),
         state: 0, // 0: pull to refresh, 1: release to refresh, 2: refreshing
-        stateText: 'Pull to Refresh',
 
-        showLoading: false
+        showLoading: false,
+
+        container: undefined,
+        content: undefined,
+        scroller: undefined,
+        pullToRefreshLayer: undefined,
+        mousedown: false,
+        infiniteTimer: undefined,
+        scrollbottom: false
       }
     },
 
     ready() {
-      container = document.getElementById(this.containerId)
-      content = document.getElementById(this.contentId)
-      pullToRefreshLayer = content.getElementsByTagName("div")[0]
+      this.container = document.getElementById(this.containerId)
+      this.container.style.width = this.width
+      this.container.style.height = this.height
 
-      scroller = new Scroller(getContentRender(content), {
-        scrollingX: false,
-        scrollingY: true
+      this.content = document.getElementById(this.contentId)
+      this.pullToRefreshLayer = this.content.getElementsByTagName("div")[0]
+
+      let render = getContentRender(this.content)
+      let core = Animate()
+
+      this.scroller = new Scroller(render, core, {
+        scrollingX: false
       });
 
       // enable PullToRefresh
       if (this.onRefresh) {
-        scroller.activatePullToRefresh(60, () => {
+        this.scroller.activatePullToRefresh(60, () => {
           this.state = 1
         }, () => {
           this.state = 0
@@ -225,21 +252,16 @@
 
       // enable infinite loading
       if (this.onInfinite) {
-        // TODO
+        this.infiniteTimer = setInterval(() => {
+          let {left, top, zoom} = this.scroller.getValues()
 
-        loadMoreTimer = setInterval(() => {
-          let {left, top, zoom} = scroller.getValues()
-
-          if (top + 60 > content.offsetHeight - container.clientHeight) {
-            if (scrollbottom) return
-            scrollbottom = true
+          if (top + 60 > this.content.offsetHeight - this.container.clientHeight) {
+            if (this.scrollbottom) return
+            this.scrollbottom = true
             this.showLoading = true
-            // scroller.scrollTo(0, 50000, true)
-
             this.onInfinite()
-
             setTimeout(() => {
-              scrollbottom = false
+              this.scrollbottom = false
             }, 1500)
           }
 
@@ -247,8 +269,8 @@
       }
 
       // setup scroller
-      let rect = container.getBoundingClientRect()
-      scroller.setPosition(rect.left + container.clientLeft, rect.top + container.clientTop)
+      let rect = this.container.getBoundingClientRect()
+      this.scroller.setPosition(rect.left + this.container.clientLeft, rect.top + this.container.clientTop)
 
       let delegate = {
         resize: this.resize,
@@ -258,37 +280,37 @@
         scrollBy: this.scrollBy
       }
 
-      window.$scroller.add(this.id, delegate)
+      window.$scroller.add(this.delegateId, delegate)
     },
 
     destroyed() {
-//      console.log('Scroller Component Destroyed.');
-
-      if (loadMoreTimer) clearInterval(loadMoreTimer);
+      if (this.infiniteTimer) clearInterval(this.infiniteTimer);
     },
 
     methods: {
       resize() {
-        scroller.setDimensions(container.clientWidth, container.clientHeight, content.offsetWidth, content.offsetHeight);
+        let container = this.container;
+        let content = this.content;
+        this.scroller.setDimensions(container.clientWidth, container.clientHeight, content.offsetWidth, content.offsetHeight);
       },
 
       finishPullToRefresh() {
-        scroller.finishPullToRefresh()
+        this.scroller.finishPullToRefresh()
         setTimeout(() => {
           this.resize()
         })
       },
 
       triggerPullToRefresh() {
-        scroller.triggerPullToRefresh()
+        this.scroller.triggerPullToRefresh()
       },
 
       scrollTo(x, y, animate) {
-        scroller.scrollTo(x, y, animate)
+        this.scroller.scrollTo(x, y, animate)
       },
 
       scrollBy(x, y, animate) {
-        scroller.scrollBy(x, y, animate)
+        this.scroller.scrollBy(x, y, animate)
       },
 
       touchStart(e) {
@@ -296,16 +318,16 @@
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return
         }
-        scroller.doTouchStart(e.touches, e.timeStamp)
+        this.scroller.doTouchStart(e.touches, e.timeStamp)
       },
 
       touchMove(e) {
         e.preventDefault()
-        scroller.doTouchMove(e.touches, e.timeStamp)
+        this.scroller.doTouchMove(e.touches, e.timeStamp)
       },
 
       touchEnd(e) {
-        scroller.doTouchEnd(e.timeStamp)
+        this.scroller.doTouchEnd(e.timeStamp)
       },
 
       mouseDown(e) {
@@ -313,30 +335,30 @@
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return
         }
-        scroller.doTouchStart([{
+        this.scroller.doTouchStart([{
           pageX: e.pageX,
           pageY: e.pageY
         }], e.timeStamp)
-        mousedown = true
+        this.mousedown = true
       },
 
       mouseMove(e) {
-        if (!mousedown) {
+        if (!this.mousedown) {
           return
         }
-        scroller.doTouchMove([{
+        this.scroller.doTouchMove([{
           pageX: e.pageX,
           pageY: e.pageY
         }], e.timeStamp)
-        mousedown = true
+        this.mousedown = true
       },
 
       mouseUp(e) {
-        if (!mousedown) {
+        if (!this.mousedown) {
           return
         }
-        scroller.doTouchEnd(e.timeStamp)
-        mousedown = false
+        this.scroller.doTouchEnd(e.timeStamp)
+        this.mousedown = false
       },
 
     }

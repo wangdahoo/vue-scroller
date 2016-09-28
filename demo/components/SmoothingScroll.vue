@@ -1,5 +1,5 @@
 <template>
-  <scroller id="smoothingScroller">
+  <scroller delegate-id="smoothingScroller">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
