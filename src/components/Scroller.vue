@@ -148,8 +148,7 @@
     window.$scroller = accessor
   }
 
-  import Animate from '../module/animate'
-  import Scroller from '../module/scroller'
+  import Scroller from '../module/core'
   import getContentRender from '../module/render'
   import Spinner from './Spinner'
 
@@ -224,9 +223,8 @@
       this.pullToRefreshLayer = this.content.getElementsByTagName("div")[0]
 
       let render = getContentRender(this.content)
-      let core = Animate()
 
-      this.scroller = new Scroller(render, core, {
+      this.scroller = new Scroller(render, {
         scrollingX: false
       });
 
