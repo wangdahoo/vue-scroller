@@ -25,9 +25,114 @@
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 
   ._v-container {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+
+  ._v-container > ._v-content {
+    width: 100%;
+
+    -webkit-transform-origin: left top;
+    -webkit-transform: translateZ(0);
+    -moz-transform-origin: left top;
+    -moz-transform: translateZ(0);
+    -ms-transform-origin: left top;
+    -ms-transform: translateZ(0);
+    -o-transform-origin: left top;
+    -o-transform: translateZ(0);
+    transform-origin: left top;
+    transform: translateZ(0);
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer {
+    width: 100%;
+    height: 60px;
+    margin-top: -60px;
+    text-align: center;
+    font-size: 16px;
+    color: #ccc;
+  }
+
+  ._v-container > ._v-content > .loading-layer {
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 60px;
+    color: #ccc;
+
+    opacity: 0;
+    transition: opacity .15s linear;
+    -webkit-transition: opacity .15s linear;
+  }
+
+  ._v-container > ._v-content > .loading-layer.active {
+    opacity: 1;
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer .spinner-holder,
+  ._v-container > ._v-content > .loading-layer .spinner-holder {
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer .spinner-holder .arrow,
+  ._v-container > ._v-content > .loading-layer .spinner-holder .arrow {
+    width: 20px;
+    height: 20px;
+    margin: 8px auto 0 auto;
+
+    -webkit-transform: translate3d(0,0,0) rotate(0deg);
+    transform: translate3d(0,0,0) rotate(0deg);
+
+    -webkit-transition: -webkit-transform .2s linear;
+    transition: transform .2s linear;
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer .spinner-holder .text,
+  ._v-container > ._v-content > .loading-layer .spinner-holder .text {
+    display: block;
+    margin: 0 auto;
+    font-size: 14px;
+    line-height: 20px;
+    color: #aaa;
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer .spinner-holder .spinner,
+  ._v-container > ._v-content > .loading-layer .spinner-holder .spinner {
+    margin-top: 14px;
+    width: 32px;
+    height: 32px;
+
+    // svg style
+    fill: #444;
+    stroke: #69717d;
+  }
+
+  ._v-container > ._v-content > .pull-to-refresh-layer.active .spinner-holder .arrow {
+    -webkit-transform: translate3d(0,0,0) rotate(180deg);
+    transform: translate3d(0,0,0) rotate(180deg);
+  }
+
+
+  /* sass version */
+
+  /*._v-container {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
     width: 100%;
@@ -91,7 +196,7 @@
         }
       }
 
-      /* spinner & arrow */
+      !* spinner & arrow *!
       .pull-to-refresh-layer, .loading-layer {
 
         .spinner-holder {
@@ -138,7 +243,7 @@
       }
 
     }
-  }
+  }*/
 
 </style>
 <script>
