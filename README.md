@@ -1,17 +1,19 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.4%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.5%20-green.svg)
 
 Vue component for smooth scrolling, pull to refresh and infinite loading.
 
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 ## Change Logs
+- v0.3.5
+support mouse events
 - v0.3.4
 change required property 'delegate-id' to non-required any more.
 - v0.3.3
 support multi scrollers in one page.
 
 ## How To Use
-#### 创建vue项目, 并安装插件
+#### Step 1: create vue project and install vue-scroller via npm. (we use vue webpack-simple template here)
 ```bash
 $ vue init webpack-simple#1.0 my-project
 $ cd my-project
@@ -19,7 +21,7 @@ $ npm install
 $ npm install vue-scroller
 ```
 
-#### 在webpack.config.js中添加resolve和loader
+#### Step 2: add resolve option and loader in webpack.config.js as below.
 ```js
 module.exports = {
   // ...
@@ -47,7 +49,7 @@ module.exports = {
 }
 ```
 
-#### 粘贴下面代码覆盖 App.vue
+#### Step 3: copy codes below to overwrite App.vue
 ```vue
 <template>
   <scroller delegate-id="myScroller"
@@ -164,12 +166,12 @@ module.exports = {
 </style>
 ```
 
-#### 在index.html中添加
+#### Step 4: add viewport meta in index.html
 ```html
 <meta name="viewport" content="width=device-width, user-scalable=no">
 ```
 
-#### 运行
+#### Step 5: run the project
 ```bash
 $ npm run dev
 ```
