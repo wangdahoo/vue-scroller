@@ -5,6 +5,10 @@
   "main": "src/index.js",
   "author": "wangdahoo <157195705@qq.com>",
   "homepage": "https://github.com/wangdahoo/vue-scroller",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangdahoo/vue-scroller.git"
+  },
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --host=0.0.0.0 --port=8000",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
