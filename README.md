@@ -1,11 +1,11 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.5%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.6%20-green.svg)
 
 Vue component for smooth scrolling, pull to refresh and infinite loading.
 
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 ## Change Logs
-- v0.3.5
+- v0.3.6
 support mouse events
 - v0.3.4
 change required property 'delegate-id' to non-required any more.
