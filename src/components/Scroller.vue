@@ -281,9 +281,12 @@
         default: '下拉刷新'
       },
 
-      delegateId: { // scroller id
+      delegateId: {
         type: String,
-        required: true
+//        required: true
+        default() {
+          return 'vs_' + Math.random().toString(36).substr(3, 8)
+        }
       },
 
       width: {
@@ -388,6 +391,7 @@
 
     destroyed() {
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
+      window.$scroller.del(this.delegateId)
     },
 
     methods: {

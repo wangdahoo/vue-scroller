@@ -1,6 +1,5 @@
 <template>
-  <scroller delegate-id="customScroller"
-    :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
+  <scroller :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">

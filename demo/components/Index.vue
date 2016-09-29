@@ -1,24 +1,33 @@
 <template>
   <scroller>
     <h1 class="title">
-      vue scroller
+      Scroller for Vue.js
     </h1>
 
-    <div class="row grey-bg" v-link="{ path: '/smoothingScroll' }">
-      Smooth Scrolling
-    </div>
-
-    <div class="row" v-link="{ path: '/refreshAndInfinite' }">
+    <label class="row grey-bg" v-link="{ path: '/refreshAndInfinite' }">
       Refresh & Infinite
-    </div>
+      <img src="../assets/arrow-right.png" class="arrow-right">
+    </label>
 
-    <div class="row grey-bg" v-link="{ path: '/multiScrollers' }">
+    <label class="row" v-link="{ path: '/multiScrollers' }">
       Multi Scrollers
-    </div>
+      <img src="../assets/arrow-right.png" class="arrow-right">
+    </label>
 
-    <div class="row" v-link="{ path: '/custom' }">
+    <label class="row grey-bg" v-link="{ path: '/smoothingScroll' }">
+      Smooth Scrolling
+      <img src="../assets/arrow-right.png" class="arrow-right">
+    </label>
+
+    <label class="row" v-link="{ path: '/custom' }">
       陈妍希
-    </div>
+      <img src="../assets/arrow-right.png" class="arrow-right">
+    </label>
+
+    <label class="row grey-bg" @click="starMe()">
+      Star Me
+      <img src="../assets/arrow-right.png" class="arrow-right">
+    </label>
 
   </scroller>
 </template>
@@ -50,12 +59,12 @@
   }
 
   .row {
+    display: block;
     width: 100%;
     height: 50px;
-    padding: 10px 0;
+    padding: 10px 0 10px 15px;
     font-size: 16px;
     line-height: 30px;
-    text-align: center;
     color: #444;
     background-color: #fff;
   }
@@ -64,5 +73,26 @@
     background-color: #eee;
   }
 
+  .arrow-right {
+    width: 12px;
+    height: 24px;
+    float: right;
+    margin-top: 5px;
+    margin-right: 15px;
+  }
+
 </style>
+
+<script>
+  export default {
+    data() {
+      return {}
+    },
+    methods: {
+      starMe() {
+        location.href = 'https://github.com/wangdahoo/vue-scroller'
+      }
+    }
+  }
+</script>
 

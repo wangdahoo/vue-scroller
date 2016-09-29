@@ -4,7 +4,7 @@
 
   Accessor.prototype.add = function (id, scroller) {
     if (id in this.scrollers && document.querySelector('[' + id + ']')) {
-      throw '重复的scroller id';
+      throw '添加scroller失败, 重复的 scroller id';
     }
     this.scrollers[id] = scroller
   };
@@ -13,7 +13,7 @@
     if (id in this.scrollers) {
       return this.scrollers[id];
     } else {
-      throw 'scroller 不存在, 错误的scroller id';
+      throw '获取scroller失败, scroller id [' + id + '] 不存在';
     }
   };
 
@@ -21,7 +21,7 @@
     if (id in this.scrollers) {
       delete this.scrollers[id];
     } else {
-      throw 'scroller 不存在, 错误的scroller id';
+      throw '删除scroller失败, scroller id [' + id + '] 不存在';
     }
   };
 

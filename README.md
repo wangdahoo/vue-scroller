@@ -1,10 +1,14 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.3%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.4%20-green.svg)
 
 Vue component for smooth scrolling, pull to refresh and infinite loading.
 
-> from v0.3.3, support multi scrollers in one page.
-
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
+
+## Change Logs
+- v0.3.4
+change required property 'delegate-id' to non-required any more.
+- v0.3.3
+support multi scrollers in one page.
 
 ## How To Use
 #### 创建vue项目, 并安装插件

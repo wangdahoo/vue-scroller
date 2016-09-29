@@ -1,5 +1,5 @@
 <template>
-  <scroller delegate-id="smoothingScroller">
+  <scroller v-ref:my_scroller>
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -28,7 +28,7 @@
       }
 
       setTimeout(() => {
-        $scroller.get('smoothingScroller').resize()
+        this.$refs.my_scroller.resize()
       })
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <scroller delegate-id="myScroller1" width="50%"
+  <scroller width="50%"
             :on-refresh="refresh"
             v-ref:my_scroller_1>
     <div v-for="(index, item) in items1"
@@ -8,7 +8,7 @@
     </div>
   </scroller>
 
-  <scroller delegate-id="myScroller2" width="50%" style="left: 50%"
+  <scroller width="50%" style="left: 50%"
             :on-refresh="refresh2"
             v-ref:my_scroller_2>
     <div v-for="(index, item) in items2"
@@ -42,8 +42,8 @@
       this.bottom = [20, 20]
 
       setTimeout(() => {
-        $scroller.get('myScroller1').resize()
-        $scroller.get('myScroller2').resize()
+        this.$refs.my_scroller_1.resize()
+        this.$refs.my_scroller_2.resize()
       })
     },
 
@@ -55,7 +55,7 @@
             this.items1.splice(0, 0, i + ' - Scroller 1')
           }
           this.top[0] = this.top[0] - 10;
-          $scroller.get('myScroller1').finishPullToRefresh()
+          this.$refs.my_scroller_1.finishPullToRefresh()
         }, 1500)
       },
 
@@ -66,10 +66,9 @@
             this.items2.splice(0, 0, i + ' - Scroller 2')
           }
           this.top[1] = this.top[1] - 10;
-          $scroller.get('myScroller2').finishPullToRefresh()
+          this.$refs.my_scroller_2.finishPullToRefresh()
         }, 1500)
       }
-
     }
 
   }
