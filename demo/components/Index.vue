@@ -74,10 +74,10 @@
   }
 
   .arrow-right {
-    width: 12px;
-    height: 24px;
+    width: 8px;
+    height: 16px;
     float: right;
-    margin-top: 5px;
+    margin-top: 7px;
     margin-right: 15px;
   }
 
