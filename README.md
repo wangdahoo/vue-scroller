@@ -8,7 +8,7 @@ Vue component for smooth scrolling, pull to refresh and infinite loading.
 - v0.3.6
 support mouse events
 - v0.3.4
-change required property 'delegate-id' to non-required any more.
+change required property 'delegate-id' to non-required.
 - v0.3.3
 support multi scrollers in one page.
 
