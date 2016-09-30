@@ -1,5 +1,7 @@
 <template>
-  <scroller width="50%"
+  <nav-bar title="Multi Scrollers"></nav-bar>
+
+  <scroller width="50%" style="top: 44px"
             :on-refresh="refresh"
             v-ref:my_scroller_1>
     <div v-for="(index, item) in items1"
@@ -8,7 +10,7 @@
     </div>
   </scroller>
 
-  <scroller width="50%" style="left: 50%"
+  <scroller width="50%" style="left: 50%; top: 44px"
             :on-refresh="refresh2"
             v-ref:my_scroller_2>
     <div v-for="(index, item) in items2"
@@ -20,10 +22,12 @@
 
 <script>
   import Scroller from 'scroller'
+  import NavBar from './NavBar.vue'
 
   export default {
     components: {
-      Scroller
+      Scroller,
+      NavBar
     },
 
     data () {

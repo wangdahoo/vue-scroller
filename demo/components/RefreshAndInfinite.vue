@@ -1,5 +1,6 @@
 <template>
-  <scroller delegate-id="myScroller"
+  <nav-bar title="Refresh & Infinite"></nav-bar>
+  <scroller delegate-id="myScroller" style="top: 44px;"
             :on-refresh="refresh"
             :on-infinite="loadMore"
             v-ref:my_scroller>
@@ -12,10 +13,12 @@
 
 <script>
   import Scroller from 'scroller'
+  import NavBar from './Navbar.vue'
 
   export default {
     components: {
-      Scroller
+      Scroller,
+      NavBar
     },
 
     data () {

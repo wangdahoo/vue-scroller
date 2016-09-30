@@ -1,5 +1,6 @@
 <template>
-  <scroller v-ref:my_scroller>
+  <nav-bar title="Smoothing Scroll"></nav-bar>
+  <scroller v-ref:my_scroller style="top: 44px;">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -10,10 +11,12 @@
 
 <script>
   import Scroller from 'scroller'
+  import NavBar from './NavBar.vue'
 
   export default {
     components: {
-      Scroller
+      Scroller,
+      NavBar
     },
 
     data () {

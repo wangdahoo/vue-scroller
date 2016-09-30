@@ -1,5 +1,8 @@
 <template>
-  <scroller :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
+  <nav-bar title="陈妍希"></nav-bar>
+
+  <scroller style="top: 44px;"
+    :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
     <div v-for="(index, item) in items"
          class="row"
          :class="{'grey-bg': index % 2 == 0}">
@@ -40,10 +43,12 @@
 
 <script>
   import Scroller from 'scroller'
+  import NavBar from './NavBar.vue'
 
   export default {
     components: {
-      Scroller
+      Scroller,
+      NavBar
     },
 
     data () {

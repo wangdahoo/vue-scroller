@@ -1,8 +1,9 @@
 <template>
   <scroller>
-    <h1 class="title">
-      Scroller for Vue.js
+    <h1 class="plugin-name">
+      Scroller
     </h1>
+    <p class="for-vue-js">for Vue.js</p>
 
     <label class="row grey-bg" v-link="{ path: '/refreshAndInfinite' }">
       Refresh & Infinite
@@ -40,22 +41,32 @@
 
   * {
     box-sizing: border-box;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   }
 
-  .title {
+  .plugin-name {
+    padding-top: 50px;
     text-align: center;
     color: #666;
-
     font-style: normal;
     font-variant-ligatures: normal;
     font-variant-caps: normal;
     font-variant-numeric: normal;
     font-weight: normal;
     font-stretch: normal;
-    font-size: 30px;
-    line-height: normal;
-    font-family: Italiana, sans-serif;
+    font-size: 48px;
+    line-height: 48px;
+    margin-bottom: 10px;
+  }
 
+  .for-vue-js {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+  }
+
+  .plugin-name, .for-vue-js {
+    font-family: Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif;
   }
 
   .row {
