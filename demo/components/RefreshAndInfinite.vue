@@ -13,7 +13,7 @@
 
 <script>
   import Scroller from 'scroller'
-  import NavBar from './Navbar.vue'
+  import NavBar from './NavBar.vue'
 
   export default {
     components: {
