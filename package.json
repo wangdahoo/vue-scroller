@@ -1,6 +1,6 @@
 {
   "name": "vue-scroller",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "Vue component for smooth scrolling, pull to refresh & infinite loading.",
   "main": "src/index.js",
   "author": "wangdahoo <157195705@qq.com>",
@@ -11,8 +11,8 @@
   },
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --host=0.0.0.0 --port=8000",
-    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
-    "release": "cross-env webpack --config ./webpack.config.release.js --progress --hide-modules"
+    "doc": "cross-env NODE_ENV=production BUILD=doc webpack --progress --hide-modules",
+    "build": "cross-env NODE_ENV=production BUILD=publish webpack --progress --hide-modules"
   },
   "keywords": [
     "vue",

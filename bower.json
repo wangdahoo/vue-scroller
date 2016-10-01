@@ -1,0 +1,32 @@
+{
+  "name": "vue-scroller",
+  "homepage": "https://github.com/wangdahoo/vue-scroller",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wangdahoo/vue-scroller.git"
+  },
+  "authors": [
+    "wangdahoo <157195705@qq.com>"
+  ],
+  "description": "Vue component for smooth scrolling, pull to refresh & infinite loading.",
+  "main": "dist/vue-scroller.min.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vue": "1.0.26"
+  },
+  "keywords": [
+    "vue",
+    "scroll",
+    "pulltorefresh",
+    "pull to refresh",
+    "pull-to-refresh",
+    "infinite load"
+  ]
+}

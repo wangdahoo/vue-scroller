@@ -64,19 +64,81 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-    new webpack.optimize.OccurenceOrderPlugin()
-  ])
+  if (process.env.BUILD == 'publish') { // Make distribution
+    var pkg = require('./package.json');
+
+    module.exports = {
+      entry: './src/index.js',
+      output: {
+        path: path.resolve(__dirname, './dist'),
+        filename: 'vue-scroller.min.js'
+      },
+      resolve: {
+        extensions: ['', '.js', '.vue'],
+        fallback: [path.join(__dirname, './node_modules')]
+      },
+      resolveLoader: {
+        root: path.join(__dirname, 'node_modules'),
+      },
+      module: {
+        loaders: [
+          {
+            test: /\.vue$/,
+            loader: 'vue'
+          },
+          {
+            test: /\.js$/,
+            loader: 'babel',
+            exclude: /node_modules/
+          },
+          {
+            test: /\.(png|jpg|gif|svg)$/,
+            loader: 'url',
+            query: {
+              limit: 10000,
+              name: '[name].[ext]?[hash]'
+            }
+          }
+        ]
+      },
+      vue: {
+        loaders: {
+          scss: 'style!css!sass',
+        }
+      },
+      devtool: '#source-map',
+
+      plugins: [
+        new webpack.DefinePlugin({
+          'process.env': {
+            NODE_ENV: '"production"'
+          }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+          compress: {
+            warnings: false
+          }
+        }),
+        new webpack.optimize.OccurenceOrderPlugin()
+      ]
+    }
+
+  } else { // Make doc
+    module.exports.devtool = '#source-map'
+    // http://vue-loader.vuejs.org/en/workflow/production.html
+
+    module.exports.plugins = (module.exports.plugins || []).concat([
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: '"production"'
+        }
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      }),
+      new webpack.optimize.OccurenceOrderPlugin()
+    ])
+  }
 }
