@@ -266,7 +266,7 @@
   }
 
   function widthAndHeightValidator(v) {
-    return /^[\d]+\%?$/.test(v)
+    return /^[\d]+(\%|px)$/.test(v)
   }
 
   export default {

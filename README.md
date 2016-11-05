@@ -1,10 +1,12 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.7%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.8%20-green.svg)
 
 Vue component for smooth scrolling, pull to refresh and infinite loading.
 
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 ## Change Logs
+- v0.3.8
+fix bug
 - v0.3.7
 publish bower version
 - v0.3.6
