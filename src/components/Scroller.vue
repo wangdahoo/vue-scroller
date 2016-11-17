@@ -471,6 +471,16 @@
         this.mousedown = false
       },
 
+      // 获取位置
+      getPosition() {
+        let v = this.scroller.getValues()
+
+        return {
+          left: parseInt(v.left),
+          top: parseInt(v.top)
+        }
+      }
+
     }
 
   }

@@ -7,7 +7,25 @@
       {{ item }}
     </div>
   </scroller>
+
+  <div class="info-position">{{ x + ',' + y }}</div>
 </template>
+
+<style>
+  .info-position {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 50px;
+    height: 50px;
+    color: #fff;
+    font-size: 12px;
+    line-height: 50px;
+    border-radius: 25px;
+    background-color: rgba(0,0,0,0.4);
+    text-align: center;
+  }
+</style>
 
 <script>
   import Scroller from 'scroller'
@@ -21,7 +39,9 @@
 
     data () {
       return {
-        items: []
+        items: [],
+        x: 0,
+        y: 0
       }
     },
 
@@ -33,6 +53,13 @@
       setTimeout(() => {
         this.$refs.my_scroller.resize()
       })
+
+      setInterval(() => {
+        let {left, top} = this.$refs.my_scroller.getPosition()
+
+        this.x = left
+        this.y = top
+      }, 50)
     }
 
   }

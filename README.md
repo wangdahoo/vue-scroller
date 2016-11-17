@@ -5,6 +5,8 @@ Vue component for smooth scrolling, pull to refresh and infinite loading.
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 ## Change Logs
+- v0.3.9
+add getPosition method for scroller instance.
 - v0.3.8
 fix bug
 - v0.3.7
@@ -179,5 +181,15 @@ module.exports = {
 ```bash
 $ npm run dev
 ```
+
+## Scroller instance API
+#### Methods
+- resize :Void
+- triggerPullToRefresh :Void
+- Void finishPullToRefresh :Void
+- scrollTo(x:Integer, y:Integer, animate:Boolean) :Void
+- scrollBy(x:Integer, y:Integer, animate:Boolean) :Void
+- getPosition :Object
+
 
 That's it, have fun.
