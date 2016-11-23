@@ -6,7 +6,7 @@ In purpose of smooth scrolling, pull to refresh and infinite loading.
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 <p align="center">
-  <img src="https://github.com/wangdahoo/vue-scroller/blob/master/vue-scroller-refresh-and-infinite.gif" /> 
+  <img src="https://github.com/wangdahoo/vue-scroller/blob/master/vue-scroller.gif" /> 
 </p>
 
 <p align="center">
