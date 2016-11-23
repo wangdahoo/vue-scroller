@@ -5,6 +5,18 @@ In purpose of smooth scrolling, pull to refresh and infinite loading.
 
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
+<p align="center">
+  <img src="https://github.com/wangdahoo/vue-scroller/blob/master/vue-scroller-refresh-and-infinite.gif" /> 
+</p>
+
+<p align="center">
+  <img src="https://github.com/wangdahoo/vue-scroller/blob/master/vue-scroller-multi.gif" /> 
+</p>
+
+<p align="center">
+  <img src="https://github.com/wangdahoo/vue-scroller/blob/master/vue-scroller-cyx.gif" /> 
+</p>
+
 ## Change Logs
 - v0.3.9
 add getPosition method for scroller instance.
