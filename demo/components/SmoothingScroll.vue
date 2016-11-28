@@ -28,7 +28,7 @@
 </style>
 
 <script>
-  import Scroller from 'scroller'
+  import Scroller from 'vue-scroller'
   import NavBar from './NavBar.vue'
 
   export default {

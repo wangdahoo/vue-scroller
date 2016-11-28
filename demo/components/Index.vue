@@ -95,7 +95,12 @@
 </style>
 
 <script>
+  import Scroller from 'vue-scroller'
+
   export default {
+    components: {
+      Scroller
+    },
     data() {
       return {}
     },

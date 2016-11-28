@@ -1,5 +1,5 @@
 <template>
-  <div class="_v-container" id="{{ containerId }}"
+  <div class="_v-container" :id="containerId"
        @touchstart="touchStart($event)"
        @touchmove="touchMove($event)"
        @touchend="touchEnd($event)"
@@ -8,7 +8,7 @@
        @mouseup="mouseUp($event)"
   >
 
-    <div class="_v-content" id="{{ contentId }}">
+    <div class="_v-content" :id="contentId">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
            :class="{'active': state == 1, 'active refreshing': state == 2}">
         <span class="spinner-holder">
@@ -122,7 +122,7 @@
     width: 32px;
     height: 32px;
 
-    // svg style
+    /* svg style */
     fill: #444;
     stroke: #69717d;
   }
@@ -270,7 +270,6 @@
   }
 
   export default {
-
     components: {
       Spinner
     },
@@ -286,7 +285,7 @@
 
       delegateId: {
         type: String,
-//        required: true
+        // required: true
         default() {
           return 'vs_' + Math.random().toString(36).substr(3, 8)
         }
@@ -480,8 +479,6 @@
           top: parseInt(v.top)
         }
       }
-
     }
-
   }
 </script>

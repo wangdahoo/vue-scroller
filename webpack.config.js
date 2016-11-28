@@ -12,7 +12,7 @@ module.exports = {
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, './node_modules')],
     alias: {
-      'scroller': path.resolve(__dirname, './src'),
+      'vue-scroller': path.resolve(__dirname, './src'),
     }
   },
   resolveLoader: {
@@ -53,7 +53,7 @@ module.exports = {
   },
   vue: {
     loaders: {
-      scss: 'style!css!sass',
+      scss: 'style!css',
     }
   },
   devServer: {
@@ -103,7 +103,7 @@ if (process.env.NODE_ENV === 'production') {
       },
       vue: {
         loaders: {
-          scss: 'style!css!sass',
+          scss: 'style!css',
         }
       },
       devtool: '#source-map',
