@@ -1,8 +1,8 @@
 <template>
-  <div class="nav-bar" v-link="{path: '/index'}">
-    <div class="btn-back">
+  <div class="nav-bar">
+    <router-link class="btn-back" tag="div" to="/">
       <img class="arrow-back" src="../assets/arrow-back.png">
-    </div>
+    </router-link>
 
     <div class="title" v-if="title">
       {{title}}

@@ -5,11 +5,12 @@
     </h1>
     <p class="for-vue-js">for Vue.js</p>
 
-    <label class="row grey-bg" v-link="{ path: '/refreshAndInfinite' }">
+    <router-link class="row grey-bg" tag="label" to="/refreshAndInfinite">
       Refresh & Infinite
       <img src="../assets/arrow-right.png" class="arrow-right">
-    </label>
+    </router-link>
 
+    <!-- 
     <label class="row" v-link="{ path: '/multiScrollers' }">
       Multi Scrollers
       <img src="../assets/arrow-right.png" class="arrow-right">
@@ -29,6 +30,7 @@
       Star Me
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
+    -->
 
   </scroller>
 </template>
@@ -99,7 +101,7 @@
 
   export default {
     components: {
-      Scroller
+     Scroller
     },
     data() {
       return {}

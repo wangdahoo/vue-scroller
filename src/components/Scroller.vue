@@ -258,7 +258,7 @@
 
   import Scroller from '../module/core'
   import getContentRender from '../module/render'
-  import Spinner from './Spinner'
+  import Spinner from './Spinner.vue'
 
   function widthAndHeightCoerce(v) {
     if (v[v.length - 1] != '%') return v + 'px'
@@ -279,7 +279,7 @@
       onInfinite: Function,
 
       refreshText: {
-        type: Text,
+        type: String,
         default: '下拉刷新'
       },
 
@@ -324,7 +324,7 @@
       }
     },
 
-    ready() {
+    mounted() {
       this.container = document.getElementById(this.containerId)
       this.container.style.width = this.width
       this.container.style.height = this.height

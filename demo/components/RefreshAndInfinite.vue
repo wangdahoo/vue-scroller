@@ -1,14 +1,17 @@
 <template>
-  <nav-bar title="Refresh & Infinite"></nav-bar>
-  <scroller delegate-id="myScroller" style="top: 44px;"
-            :on-refresh="refresh"
-            :on-infinite="loadMore"
-            v-ref:my_scroller>
-    <div v-for="(index, item) in items" @click="onItemClick(index, item)"
-         class="row" :class="{'grey-bg': index % 2 == 0}">
-      {{ item }}
-    </div>
-  </scroller>
+  <div>
+    <nav-bar title="Refresh & Infinite"></nav-bar>
+    <scroller delegate-id="myScroller" style="top: 44px;"
+              :on-refresh="refresh"
+              :on-infinite="loadMore"
+              ref:my_scroller>
+
+      <div v-for="(item, index) in items" @click="onItemClick(index, item)"
+          class="row" :class="{'grey-bg': index % 2 == 0}">
+        {{ item }}
+      </div>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -27,7 +30,7 @@
       }
     },
 
-    ready() {
+    mounted() {
 
       for (let i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
