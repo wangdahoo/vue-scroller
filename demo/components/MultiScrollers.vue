@@ -61,7 +61,8 @@
             this.items1.splice(0, 0, i + ' - Scroller 1')
           }
           this.top[0] = this.top[0] - 10;
-          this.$refs.my_scroller_1.finishPullToRefresh()
+          if (this.$refs.my_scroller_1)
+            this.$refs.my_scroller_1.finishPullToRefresh()
         }, 1500)
       },
 
@@ -72,7 +73,8 @@
             this.items2.splice(0, 0, i + ' - Scroller 2')
           }
           this.top[1] = this.top[1] - 10;
-          this.$refs.my_scroller_2.finishPullToRefresh()
+          if (this.$refs.my_scroller_2)
+            this.$refs.my_scroller_2.finishPullToRefresh()
         }, 1500)
       }
     }

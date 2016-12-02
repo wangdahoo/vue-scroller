@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav-bar title="Refresh & Infinite"></nav-bar>
-    <scroller delegate-id="myScroller" style="top: 44px;"
+    <scroller style="top: 44px;"
               :on-refresh="refresh"
               :on-infinite="loadMore"
               ref="my_scroller">
@@ -39,12 +39,7 @@
       this.bottom = 20
 
       setTimeout(() => {
-        /* 下面2种方式都可以调用 resize 方法 */
-        // 1. use scroller accessor
-        $scroller.get('myScroller').resize()
-
-        // 2. use component ref
-        // this.$refs.my_scroller.resize()
+        this.$refs.my_scroller.resize()
       })
     },
 
@@ -59,10 +54,8 @@
 
           this.top = this.top - 10;
 
-          /* 下面2种方式都可以调用 finishPullToRefresh 方法 */
-          $scroller.get('myScroller').finishPullToRefresh()
-          // this.$refs.my_scroller.finishPullToRefresh()
-
+          if (this.$refs.my_scroller)
+            this.$refs.my_scroller.finishPullToRefresh()
         }, 1500)
       },
 
@@ -78,7 +71,8 @@
           this.bottom = this.bottom + 10;
 
           setTimeout(() => {
-            $scroller.get('myScroller').resize()
+            if (this.$refs.my_scroller)
+              this.$refs.my_scroller.resize()
           })
         }, 1500)
       },

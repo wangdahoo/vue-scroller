@@ -132,7 +132,6 @@
     transform: translate3d(0,0,0) rotate(180deg);
   }
 
-
   /* sass version */
 
   /*._v-container {
@@ -250,12 +249,6 @@
 
 </style>
 <script>
-
-  import accessor from '../module/accessor'
-  if (!(window.$scroller && window.$scroller.name == 'vue_scroller_accessor')) {
-    window.$scroller = accessor
-  }
-
   import Scroller from '../module/core'
   import getContentRender from '../module/render'
   import Spinner from './Spinner.vue'
@@ -281,14 +274,6 @@
       refreshText: {
         type: String,
         default: '下拉刷新'
-      },
-
-      delegateId: {
-        type: String,
-        // required: true
-        default() {
-          return 'vs_' + Math.random().toString(36).substr(3, 8)
-        }
       },
 
       width: {
@@ -387,13 +372,10 @@
         scrollTo: this.scrollTo,
         scrollBy: this.scrollBy
       }
-
-      window.$scroller.add(this.delegateId, delegate)
     },
 
-    destroyed() {
+    beforeDestroyed() {
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
-      window.$scroller.del(this.delegateId)
     },
 
     methods: {
