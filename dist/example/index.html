@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <script src="../../bower_components/vue/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
   <script src="../vue-scroller.min.js"></script>
   <title>Scroll</title>
 
@@ -62,10 +62,9 @@
 
   <scroller delegate-id="myScroller" style="top: 44px"
             :on-refresh="refresh"
-            :on-infinite="loadMore"
-            v-ref:my_scroller>
-    <div v-for="(index, item) in items" @click="onItemClick(index, item)"
-         class="row" :class="{'grey-bg': index % 2 == 0}">
+            :on-infinite="infinite"
+            ref="my_scroller">
+    <div v-for="(item, index) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
       {{ item }}
     </div>
   </scroller>
@@ -82,7 +81,7 @@
       items: []
     },
 
-    ready: function () {
+    mounted: function () {
       for (var i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.');
       }
@@ -90,12 +89,7 @@
       this.bottom = 20;
 
       setTimeout(() => {
-        /* 下面2种方式都可以调用 resize 方法 */
-        // 1. use scroller accessor
-        $scroller.get('myScroller').resize();
-
-        // 2. use component ref
-        // this.$refs.my_scroller.resize();
+        this.$refs.my_scroller.resize();
       })
     },
 
@@ -107,15 +101,12 @@
             this.items.splice(0, 0, i + ' - keep walking, be 2 with you.');
           }
           this.top = this.top - 10;
-
-          /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
-          // this.$broadcast('$finishPullToRefresh');
-          $scroller.get('myScroller').finishPullToRefresh();
-          // this.$refs.my_scroller.finishPullToRefresh();
+          if (this.$refs.my_scroller)
+            this.$refs.my_scroller.finishPullToRefresh();
         }, 1500)
       },
 
-      loadMore() {
+      infinite() {
         setTimeout(() => {
           var start = this.bottom + 1;
           for (var i = start; i < start + 10; i++) {
@@ -124,7 +115,8 @@
           this.bottom = this.bottom + 10;
 
           setTimeout(() => {
-            $scroller.get('myScroller').resize();
+            if (this.$refs.my_scroller)
+              this.$refs.my_scroller.resize();
           })
         }, 1500)
       }

@@ -45,6 +45,21 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
+
+  if (process.env.BUILD == 'publish') {
+    module.exports.entry = './src/index.js';
+    module.exports.output = {
+      path: path.resolve(__dirname, './dist'),
+      filename: 'vue-scroller.min.js'
+    };
+
+    module.exports.resolve = {
+      alias: {
+        'vue$': 'vue/dist/vue.common.js'
+      }
+    }
+  }
+
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
