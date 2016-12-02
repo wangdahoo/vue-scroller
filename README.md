@@ -1,11 +1,16 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.9%20-green.svg) ![vue](https://img.shields.io/badge/vue-%20v1.0%20-green.svg) ![gzip](https://img.shields.io/badge/gzip-%2010k%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v2.0.0%20-green.svg) ![gzip](https://img.shields.io/badge/gzip-%2010k%20-green.svg)
 
 [Vue Scroller](https://github.com/wangdahoo/vue-scroller) is a foundational component of [Vonic](https://github.com/wangdahoo/vonic) UI.
 In purpose of smooth scrolling, pull to refresh and infinite loading.
 
+> v0.3.9 for vue 1.x and v2.0.0 for vue 2.x
+
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 ## Change Logs
+- v2.0.0
+  - for Vue.js 2.0 [sample code](https://github.com/wangdahoo/vue-scroller/blob/v2/dist/example/index.html)
+  - remove $scroller accessor, now you can only get scroller instance with this.$refs.yourScrollerName by vue 2.x 's ref tag.
 - v0.3.9
 add getPosition method for scroller instance.
 - v0.3.8
