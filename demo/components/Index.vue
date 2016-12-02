@@ -3,7 +3,7 @@
     <h1 class="plugin-name">
       Scroller
     </h1>
-    <p class="for-vue-js">for Vue.js</p>
+    <p class="for-vue-js">for Vue.js 2.0</p>
 
     <router-link class="row grey-bg" tag="label" to="/refreshAndInfinite">
       Refresh & Infinite

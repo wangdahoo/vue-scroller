@@ -4,7 +4,7 @@ var webpack = require('webpack')
 module.exports = {
   entry: './demo/main.js',
   output: {
-    path: path.resolve(__dirname, './dist'),
+    path: path.resolve(__dirname, './docs'),
     publicPath: '/dist/',
     filename: 'build.js'
   },
@@ -24,7 +24,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
           name: '[name].[ext]?[hash]'
         }
