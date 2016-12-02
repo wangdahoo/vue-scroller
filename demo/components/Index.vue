@@ -9,28 +9,26 @@
       Refresh & Infinite
       <img src="../assets/arrow-right.png" class="arrow-right">
     </router-link>
-
-    <!-- 
-    <label class="row" v-link="{ path: '/multiScrollers' }">
+    
+    <router-link class="row" tag="label" to="/multiScrollers">
       Multi Scrollers
       <img src="../assets/arrow-right.png" class="arrow-right">
-    </label>
-
-    <label class="row grey-bg" v-link="{ path: '/smoothingScroll' }">
+    </router-link>
+    
+    <router-link class="row grey-bg" tag="label" to="/smoothingScroll">
       Smooth Scrolling
       <img src="../assets/arrow-right.png" class="arrow-right">
-    </label>
+    </router-link>
 
-    <label class="row" v-link="{ path: '/custom' }">
+    <router-link class="row" tag="label" to="/custom">
       陈妍希
       <img src="../assets/arrow-right.png" class="arrow-right">
-    </label>
+    </router-link>
 
     <label class="row grey-bg" @click="starMe()">
       Star Me
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
-    -->
 
   </scroller>
 </template>

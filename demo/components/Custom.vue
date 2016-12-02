@@ -1,16 +1,17 @@
 <template>
-  <nav-bar title="陈妍希"></nav-bar>
+  <div>
+    <nav-bar title="陈妍希"></nav-bar>
 
-  <scroller style="top: 44px;"
-    :on-refresh="refresh" v-ref:my_scroller class="my-scroller">
-    <div v-for="(index, item) in items"
-         class="row"
-         :class="{'grey-bg': index % 2 == 0}">
-      {{ item }}
-    </div>
-  </scroller>
+    <scroller style="top: 44px;"
+      :on-refresh="refresh" ref="my_scroller" class="my-scroller">
+      <div v-for="(item, index) in items"
+          class="row"
+          :class="{'grey-bg': index % 2 == 0}">
+        {{ item }}
+      </div>
+    </scroller>
+  </div>
 </template>
-
 <style>
 
   .my-scroller .pull-to-refresh-layer .spinner-holder
@@ -39,8 +40,6 @@
   }
 
 </style>
-
-
 <script>
   import Scroller from 'vue-scroller'
   import NavBar from './NavBar.vue'
@@ -57,7 +56,7 @@
       }
     },
 
-    ready() {
+    mounted() {
       for (let i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
@@ -78,7 +77,7 @@
           }
           this.top = this.top - 10;
 
-          this.$broadcast('$finishPullToRefresh')
+          this.$refs.my_scroller.finishPullToRefresh()
         }, 1500)
       },
     }

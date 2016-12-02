@@ -4,7 +4,7 @@
     <scroller delegate-id="myScroller" style="top: 44px;"
               :on-refresh="refresh"
               :on-infinite="loadMore"
-              ref:my_scroller>
+              ref="my_scroller">
 
       <div v-for="(item, index) in items" @click="onItemClick(index, item)"
           class="row" :class="{'grey-bg': index % 2 == 0}">
@@ -59,9 +59,7 @@
 
           this.top = this.top - 10;
 
-          /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
-
-          // this.$broadcast('$finishPullToRefresh')
+          /* 下面2种方式都可以调用 finishPullToRefresh 方法 */
           $scroller.get('myScroller').finishPullToRefresh()
           // this.$refs.my_scroller.finishPullToRefresh()
 
