@@ -51,11 +51,6 @@ module.exports = {
       }
     ]
   },
-  vue: {
-    loaders: {
-      scss: 'style!css!sass',
-    }
-  },
   devServer: {
     historyApiFallback: true,
     noInfo: true
@@ -100,11 +95,6 @@ if (process.env.NODE_ENV === 'production') {
             }
           }
         ]
-      },
-      vue: {
-        loaders: {
-          scss: 'style!css!sass',
-        }
       },
       devtool: '#source-map',
 

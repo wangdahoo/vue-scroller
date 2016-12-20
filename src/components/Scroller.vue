@@ -20,10 +20,14 @@
 
       <slot></slot>
 
-      <div v-if="onInfinite" class="loading-layer" :class="{'active': showLoading}">
-        <span class="spinner-holder">
+      <div v-if="onInfinite" class="loading-layer">
+        <span class="spinner-holder" :class="{'active': showLoading}">
           <spinner class="spinner"></spinner>
         </span>
+
+        <div class="no-data-text" :class="{'active': !showLoading && loadingState == 2}">
+          {{ noDataText }}
+        </div>
       </div>
     </div>
   </div>
@@ -78,13 +82,30 @@
     font-size: 16px;
     line-height: 60px;
     color: #ccc;
+    position: relative;
+  }
 
+  ._v-container > ._v-content > .loading-layer > .no-data-text 
+  {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  ._v-container > ._v-content > .loading-layer > .spinner-holder,
+  ._v-container > ._v-content > .loading-layer > .no-data-text 
+  {
     opacity: 0;
     transition: opacity .15s linear;
     -webkit-transition: opacity .15s linear;
   }
 
-  ._v-container > ._v-content > .loading-layer.active {
+  ._v-container > ._v-content > .loading-layer > .spinner-holder.active,
+  ._v-container > ._v-content > .loading-layer > .no-data-text.active
+  {
     opacity: 1;
   }
 
@@ -131,123 +152,6 @@
     -webkit-transform: translate3d(0,0,0) rotate(180deg);
     transform: translate3d(0,0,0) rotate(180deg);
   }
-
-
-  /* sass version */
-
-  /*._v-container {
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-
-    ._v-content {
-      width: 100%;
-
-      -webkit-transform-origin: left top;
-      -webkit-transform: translateZ(0);
-      -moz-transform-origin: left top;
-      -moz-transform: translateZ(0);
-      -ms-transform-origin: left top;
-      -ms-transform: translateZ(0);
-      -o-transform-origin: left top;
-      -o-transform: translateZ(0);
-      transform-origin: left top;
-      transform: translateZ(0);
-
-      .pull-to-refresh-layer {
-        width: 100%;
-        height: 60px;
-        margin-top: -60px;
-        text-align: center;
-        font-size: 16px;
-        color: #ccc;
-
-        &.active {
-          // no style
-        }
-
-        &.refreshing {
-          // no style
-        }
-      }
-
-      .loading-layer {
-        width: 100%;
-        height: 60px;
-        text-align: center;
-        font-size: 16px;
-        line-height: 60px;
-        color: #ccc;
-
-        opacity: 0;
-        transition: opacity .15s linear;
-        -webkit-transition: opacity .15s linear;
-
-        &.active {
-          opacity: 1;
-        }
-      }
-
-      !* spinner & arrow *!
-      .pull-to-refresh-layer, .loading-layer {
-
-        .spinner-holder {
-          text-align: center;
-          -webkit-font-smoothing: antialiased;
-
-          .arrow {
-            width: 20px;
-            height: 20px;
-            margin: 8px auto 0 auto;
-
-            -webkit-transform: translate3d(0,0,0) rotate(0deg);
-            transform: translate3d(0,0,0) rotate(0deg);
-
-            -webkit-transition: -webkit-transform .2s linear;
-            transition: transform .2s linear;
-          }
-
-          .text {
-            display: block;
-            margin: 0 auto;
-            font-size: 14px;
-            line-height: 20px;
-            color: #aaa;
-          }
-
-          .spinner {
-            margin-top: 14px;
-            width: 32px;
-            height: 32px;
-
-            // svg style
-            fill: #444;
-            stroke: #69717d;
-          }
-        }
-
-        &.active .spinner-holder {
-          .arrow {
-            -webkit-transform: translate3d(0,0,0) rotate(180deg);
-            transform: translate3d(0,0,0) rotate(180deg);
-          }
-        }
-      }
-
-    }
-  }*/
-
 </style>
 <script>
   import Scroller from '../module/core'
@@ -264,7 +168,6 @@
   }
 
   export default {
-
     components: {
       Spinner
     },
@@ -274,16 +177,13 @@
       onInfinite: Function,
 
       refreshText: {
-        type: Text,
+        type: String,
         default: '下拉刷新'
       },
 
-      delegateId: {
+      noDataText: {
         type: String,
-//        required: true
-        default() {
-          return 'vs_' + Math.random().toString(36).substr(3, 8)
-        }
+        default: '没有更多数据'
       },
 
       width: {
@@ -306,6 +206,7 @@
         containerId: 'outer-' + Math.random().toString(36).substring(3, 8),
         contentId: 'inner-' + Math.random().toString(36).substring(3, 8),
         state: 0, // 0: pull to refresh, 1: release to refresh, 2: refreshing
+        loadingState: 0, // 0: stop, 1: loading, 2: stopping loading
 
         showLoading: false,
 
@@ -314,8 +215,7 @@
         scroller: undefined,
         pullToRefreshLayer: undefined,
         mousedown: false,
-        infiniteTimer: undefined,
-        scrollbottom: false
+        infiniteTimer: undefined
       }
     },
 
@@ -359,13 +259,10 @@
           let {left, top, zoom} = this.scroller.getValues()
 
           if (top + 60 > this.content.offsetHeight - this.container.clientHeight) {
-            if (this.scrollbottom) return
-            this.scrollbottom = true
+            if (this.loadingState) return
+            this.loadingState = 1
             this.showLoading = true
             this.onInfinite()
-            setTimeout(() => {
-              this.scrollbottom = false
-            }, 1500)
           }
 
         }, 10);
@@ -470,9 +367,31 @@
           left: parseInt(v.left),
           top: parseInt(v.top)
         }
+      },
+
+      resetLoadingState() {
+        let {left, top, zoom} = this.scroller.getValues()
+        let container = this.container;
+        let content = this.content;
+
+        if (top + 60 > this.content.offsetHeight - this.container.clientHeight) {
+          setTimeout(() => {
+            this.resetLoadingState()
+          }, 1000)
+        } else {
+          this.loadingState = 0
+        }
+      },
+
+      finishInfinite(hideSpinner) {
+        this.loadingState = hideSpinner ? 2 : 0
+        this.showLoading = false
+        this.resize()
+
+        if (this.loadingState == 2) {
+          this.resetLoadingState()
+        }
       }
-
     }
-
   }
 </script>

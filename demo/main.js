@@ -7,6 +7,7 @@ import RefreshAndInfinite from './components/RefreshAndInfinite.vue'
 import SmoothingScroll from './components/SmoothingScroll.vue'
 import Custom from './components/Custom.vue'
 import MultiScrollers from './components/MultiScrollers.vue'
+import LoadMoreAndNoData from './components/LoadMoreAndNoData.vue'
 
 const routers = {
   '/index': {
@@ -28,6 +29,9 @@ const routers = {
     component: MultiScrollers
   },
 
+  '/loadMoreAndNoData': {
+    component: LoadMoreAndNoData
+  }
 }
 
 let router = new VueRouter({

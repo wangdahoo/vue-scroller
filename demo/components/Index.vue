@@ -10,8 +10,8 @@
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
 
-    <label class="row" v-link="{ path: '/multiScrollers' }">
-      Multi Scrollers
+    <label class="row" v-link="{ path: '/loadMoreAndNoData' }">
+      Load More & No Data
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
 
@@ -20,13 +20,18 @@
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
 
-    <label class="row" v-link="{ path: '/custom' }">
-      陈妍希
+    <label class="row" v-link="{ path: '/multiScrollers' }">
+      Multi Scrollers
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
 
-    <label class="row grey-bg" @click="starMe()">
-      Star Me
+    <label class="row grey-bg" v-link="{ path: '/custom' }">
+      Custom Spinner
+      <img src="../assets/arrow-right.png" class="arrow-right">
+    </label>
+
+    <label class="row" @click="starMe()">
+      GitHub Repo
       <img src="../assets/arrow-right.png" class="arrow-right">
     </label>
 
@@ -37,6 +42,7 @@
 
   html, body {
     margin: 0;
+    background: #f8f8f8;
   }
 
   * {
