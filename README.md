@@ -1,4 +1,4 @@
-# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.3.9%20-green.svg) ![vue](https://img.shields.io/badge/vue-%20v1.0%20-green.svg) ![gzip](https://img.shields.io/badge/gzip-%2010k%20-green.svg)
+# Vue Scroller ![version](https://img.shields.io/badge/release-%20v0.4.0%20-green.svg) ![vue](https://img.shields.io/badge/vue-%20v1.0%20-green.svg) ![gzip](https://img.shields.io/badge/gzip-%2010k%20-green.svg)
 
 [Vue Scroller](https://github.com/wangdahoo/vue-scroller) is a foundational component of [Vonic](https://github.com/wangdahoo/vonic) UI.
 In purpose of smooth scrolling, pull to refresh and infinite loading.
@@ -6,6 +6,9 @@ In purpose of smooth scrolling, pull to refresh and infinite loading.
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
 ## Change Logs
+- v0.4.0
+add finishInfinite method for better 'no more data' support.
+remove $scroller
 - v0.3.9
 add getPosition method for scroller instance.
 - v0.3.8
@@ -59,10 +62,7 @@ module.exports = {
 #### Step 3: copy codes below to overwrite App.vue
 ```vue
 <template>
-  <scroller delegate-id="myScroller"
-            :on-refresh="refresh"
-            :on-infinite="loadMore"
-            v-ref:my_scroller>
+  <scroller :on-refresh="refresh" :on-infinite="infinite" v-ref:my_scroller>
     <div v-for="(index, item) in items" @click="onItemClick(index, item)"
          class="row" :class="{'grey-bg': index % 2 == 0}">
       {{ item }}
@@ -85,7 +85,6 @@ module.exports = {
     },
 
     ready() {
-
       for (let i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
@@ -93,12 +92,7 @@ module.exports = {
       this.bottom = 20
 
       setTimeout(() => {
-        /* 下面2种方式都可以调用 resize 方法 */
-        // 1. use scroller accessor
-        $scroller.get('myScroller').resize()
-
-        // 2. use component ref
-        // this.$refs.my_scroller.resize()
+        this.$refs.my_scroller.resize()
       })
     },
 
@@ -106,35 +100,27 @@ module.exports = {
       refresh() {
         setTimeout(() => {
           let start = this.top - 1
-
           for (let i = start; i > start - 10; i--) {
             this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
           }
-
           this.top = this.top - 10;
 
-          /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
-
+          /* 下面2种方式都可以调用 finishPullToRefresh 方法 */
           // this.$broadcast('$finishPullToRefresh')
-          $scroller.get('myScroller').finishPullToRefresh()
-          // this.$refs.my_scroller.finishPullToRefresh()
-
+          this.$refs.my_scroller.finishPullToRefresh()
         }, 1500)
       },
 
-      loadMore() {
+      infinite() {
         setTimeout(() => {
-
           let start = this.bottom + 1
-
           for (let i = start; i < start + 10; i++) {
             this.items.push(i + ' - keep walking, be 2 with you.')
           }
-
           this.bottom = this.bottom + 10;
 
           setTimeout(() => {
-            $scroller.get('myScroller').resize()
+            this.$refs.my_scroller.finishInfinite()
           })
         }, 1500)
       },
@@ -143,10 +129,8 @@ module.exports = {
         console.log(index)
       }
     }
-
   }
 </script>
-
 <style>
   html, body {
     margin: 0;
@@ -185,9 +169,10 @@ $ npm run dev
 
 ## Scroller instance API
 #### Methods
-- resize :Void
-- triggerPullToRefresh :Void
-- Void finishPullToRefresh :Void
+- resize() :Void
+- triggerPullToRefresh() :Void
+- finishPullToRefresh() :Void
+- finishInfinite(isNoMoreData :Boolean) :Void
 - scrollTo(x:Integer, y:Integer, animate:Boolean) :Void
 - scrollBy(x:Integer, y:Integer, animate:Boolean) :Void
 - getPosition :Object
