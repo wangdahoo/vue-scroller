@@ -1,8 +1,8 @@
 <template>
   <nav-bar title="Refresh & Infinite"></nav-bar>
-  <scroller delegate-id="myScroller" style="top: 44px;"
+  <scroller style="top: 44px;"
             :on-refresh="refresh"
-            :on-infinite="loadMore"
+            :on-infinite="infinite"
             v-ref:my_scroller>
     <div v-for="(index, item) in items" @click="onItemClick(index, item)"
          class="row" :class="{'grey-bg': index % 2 == 0}">
@@ -28,7 +28,6 @@
     },
 
     ready() {
-
       for (let i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
@@ -36,12 +35,7 @@
       this.bottom = 20
 
       setTimeout(() => {
-        /* 下面2种方式都可以调用 resize 方法 */
-        // 1. use scroller accessor
-        $scroller.get('myScroller').resize()
-
-        // 2. use component ref
-        // this.$refs.my_scroller.resize()
+        this.$refs.my_scroller.resize()
       })
     },
 
@@ -56,18 +50,14 @@
 
           this.top = this.top - 10;
 
-          /* 下面3种方式都可以调用 finishPullToRefresh 方法 */
-
+          /* 下面2种方式都可以调用 finishPullToRefresh 方法 */
           // this.$broadcast('$finishPullToRefresh')
-          $scroller.get('myScroller').finishPullToRefresh()
-          // this.$refs.my_scroller.finishPullToRefresh()
-
+          this.$refs.my_scroller.finishPullToRefresh()
         }, 1500)
       },
 
-      loadMore() {
+      infinite() {
         setTimeout(() => {
-
           let start = this.bottom + 1
 
           for (let i = start; i < start + 10; i++) {
@@ -77,7 +67,7 @@
           this.bottom = this.bottom + 10;
 
           setTimeout(() => {
-            $scroller.get('myScroller').resize()
+            this.$refs.my_scroller.resize()
           })
         }, 1500)
       },

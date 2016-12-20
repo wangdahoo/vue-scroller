@@ -10,7 +10,7 @@
     "url": "https://github.com/wangdahoo/vue-scroller.git"
   },
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --host=0.0.0.0 --port=8000",
+    "dev": "webpack-dev-server --inline --hot --host=0.0.0.0 --port=8080",
     "doc": "cross-env NODE_ENV=production BUILD=doc webpack --progress --hide-modules",
     "build": "cross-env NODE_ENV=production BUILD=publish webpack --progress --hide-modules"
   },

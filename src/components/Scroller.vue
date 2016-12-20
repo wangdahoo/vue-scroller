@@ -250,12 +250,6 @@
 
 </style>
 <script>
-
-  import accessor from '../module/accessor'
-  if (!(window.$scroller && window.$scroller.name == 'vue_scroller_accessor')) {
-    window.$scroller = accessor
-  }
-
   import Scroller from '../module/core'
   import getContentRender from '../module/render'
   import Spinner from './Spinner'
@@ -388,13 +382,10 @@
         scrollTo: this.scrollTo,
         scrollBy: this.scrollBy
       }
-
-      window.$scroller.add(this.delegateId, delegate)
     },
 
     destroyed() {
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
-      window.$scroller.del(this.delegateId)
     },
 
     methods: {
