@@ -1,16 +1,17 @@
 <template>
-  <nav-bar title="Load More & No Data"></nav-bar>
-  <scroller :on-infinite="infinite" v-ref:my_scroller>
-    <div style="height: 44px;"></div>
-    <div v-for="(index, item) in items"
-         class="row" :class="{'grey-bg': index % 2 == 0}">
-      {{ item }}
-    </div>
-  </scroller>
+  <div>
+    <nav-bar title="Load More & No Data"></nav-bar>
+    <scroller :on-infinite="infinite" ref="my_scroller">
+      <div style="height: 44px;"></div>
+      <div v-for="(item, index) in items"
+          class="row" :class="{'grey-bg': index % 2 == 0}">
+        {{ item }}
+      </div>
+    </scroller>
+  </div>
 </template>
-
 <script>
-  import Scroller from 'scroller'
+  import Scroller from 'vue-scroller'
   import NavBar from './NavBar.vue'
 
   export default {
@@ -25,7 +26,7 @@
       }
     },
 
-    ready() {
+    mounted() {
       for (let i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
