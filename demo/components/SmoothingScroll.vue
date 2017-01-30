@@ -1,16 +1,17 @@
 <template>
-  <nav-bar title="Smoothing Scroll"></nav-bar>
-  <scroller v-ref:my_scroller style="top: 44px;">
-    <div v-for="(index, item) in items"
-         class="row"
-         :class="{'grey-bg': index % 2 == 0}">
-      {{ item }}
-    </div>
-  </scroller>
+  <div>
+    <nav-bar title="Smoothing Scroll"></nav-bar>
+    <scroller ref="my_scroller" style="top: 44px;">
+      <div v-for="(item, index) in items"
+          class="row"
+          :class="{'grey-bg': index % 2 == 0}">
+        {{ item }}
+      </div>
+    </scroller>
 
-  <div class="info-position">{{ x + ',' + y }}</div>
+    <div class="info-position">{{ x + ',' + y }}</div>
+  </div>
 </template>
-
 <style>
   .info-position {
     position: fixed;
@@ -26,9 +27,8 @@
     text-align: center;
   }
 </style>
-
 <script>
-  import Scroller from 'scroller'
+  import Scroller from 'vue-scroller'
   import NavBar from './NavBar.vue'
 
   export default {
@@ -41,11 +41,12 @@
       return {
         items: [],
         x: 0,
-        y: 0
+        y: 0,
+        timer: 0
       }
     },
 
-    ready() {
+    mounted() {
       for (let i = 1; i < 1000; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
@@ -54,12 +55,16 @@
         this.$refs.my_scroller.resize()
       })
 
-      setInterval(() => {
+      this.timer = setInterval(() => {
         let {left, top} = this.$refs.my_scroller.getPosition()
 
         this.x = left
         this.y = top
       }, 50)
+    },
+
+    beforeDestroy() {
+      clearInterval(this.timer)
     }
 
   }

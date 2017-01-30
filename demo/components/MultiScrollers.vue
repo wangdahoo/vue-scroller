@@ -1,27 +1,29 @@
 <template>
-  <nav-bar title="Multi Scrollers"></nav-bar>
+  <div>
+    <nav-bar title="Multi Scrollers"></nav-bar>
 
-  <scroller width="50%" style="top: 44px"
-            :on-refresh="refresh"
-            v-ref:my_scroller_1>
-    <div v-for="(index, item) in items1"
-         class="row" :class="{'grey-bg': index % 2 == 0}">
-      {{ item }}
-    </div>
-  </scroller>
+    <scroller width="50%" style="top: 44px"
+              :on-refresh="refresh"
+              ref="my_scroller_1">
+      <div v-for="(item, index) in items1"
+          class="row" :class="{'grey-bg': index % 2 == 0}">
+        {{ item }}
+      </div>
+    </scroller>
 
-  <scroller width="50%" style="left: 50%; top: 44px"
-            :on-refresh="refresh2"
-            v-ref:my_scroller_2>
-    <div v-for="(index, item) in items2"
-         class="row" :class="{'grey-bg': index % 2 == 1}">
-      {{ item }}
-    </div>
-  </scroller>
+    <scroller width="50%" style="left: 50%; top: 44px"
+              :on-refresh="refresh2"
+              ref="my_scroller_2">
+      <div v-for="(item, index) in items2"
+          class="row" :class="{'grey-bg': index % 2 == 1}">
+        {{ item }}
+      </div>
+    </scroller>
+  </div>
 </template>
 
 <script>
-  import Scroller from 'scroller'
+  import Scroller from 'vue-scroller'
   import NavBar from './NavBar.vue'
 
   export default {
@@ -37,7 +39,7 @@
       }
     },
 
-    ready() {
+    mounted() {
       for (let i = 1; i <= 20; i++) {
         this.items1.push(i + ' - Scroller 1')
         this.items2.push(i + ' - Scroller 2')
@@ -59,7 +61,8 @@
             this.items1.splice(0, 0, i + ' - Scroller 1')
           }
           this.top[0] = this.top[0] - 10;
-          this.$refs.my_scroller_1.finishPullToRefresh()
+          if (this.$refs.my_scroller_1)
+            this.$refs.my_scroller_1.finishPullToRefresh()
         }, 1500)
       },
 
@@ -70,7 +73,8 @@
             this.items2.splice(0, 0, i + ' - Scroller 2')
           }
           this.top[1] = this.top[1] - 10;
-          this.$refs.my_scroller_2.finishPullToRefresh()
+          if (this.$refs.my_scroller_2)
+            this.$refs.my_scroller_2.finishPullToRefresh()
         }, 1500)
       }
     }

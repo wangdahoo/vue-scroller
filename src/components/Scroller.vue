@@ -1,5 +1,5 @@
 <template>
-  <div class="_v-container" id="{{ containerId }}"
+  <div class="_v-container" :id="containerId"
        @touchstart="touchStart($event)"
        @touchmove="touchMove($event)"
        @touchend="touchEnd($event)"
@@ -8,7 +8,7 @@
        @mouseup="mouseUp($event)"
   >
 
-    <div class="_v-content" id="{{ contentId }}">
+    <div class="_v-content" :id="contentId">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
            :class="{'active': state == 1, 'active refreshing': state == 2}">
         <span class="spinner-holder">
@@ -25,8 +25,8 @@
           <spinner class="spinner"></spinner>
         </span>
 
-        <div class="no-data-text" :class="{'active': !showLoading && loadingState == 2}">
-          {{ noDataText }}
+        <div class="no-data-text"
+          :class="{'active': !showLoading && loadingState == 2}" v-text="noDataText">
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
     position: relative;
   }
 
-  ._v-container > ._v-content > .loading-layer > .no-data-text 
+  ._v-container > ._v-content > .loading-layer > .no-data-text
   {
     position: absolute;
     left: 0;
@@ -96,7 +96,7 @@
   }
 
   ._v-container > ._v-content > .loading-layer > .spinner-holder,
-  ._v-container > ._v-content > .loading-layer > .no-data-text 
+  ._v-container > ._v-content > .loading-layer > .no-data-text
   {
     opacity: 0;
     transition: opacity .15s linear;
@@ -156,15 +156,17 @@
 <script>
   import Scroller from '../module/core'
   import getContentRender from '../module/render'
-  import Spinner from './Spinner'
+  import Spinner from './Spinner.vue'
 
-  function widthAndHeightCoerce(v) {
+  const re = /^[\d]+(\%)?$/
+
+  const widthAndHeightCoerce = (v) => {
     if (v[v.length - 1] != '%') return v + 'px'
     return v
   }
 
-  function widthAndHeightValidator(v) {
-    return /^[\d]+(\%|px)$/.test(v)
+  const widthAndHeightValidator = (v) => {
+    return re.test(v)
   }
 
   export default {
@@ -189,15 +191,23 @@
       width: {
         type: String,
         default: '100%',
-        validator: widthAndHeightValidator,
-        coerce: widthAndHeightCoerce
+        validator: widthAndHeightValidator
       },
 
       height: {
         type: String,
         default: '100%',
-        validator: widthAndHeightValidator,
-        coerce: widthAndHeightCoerce
+        validator: widthAndHeightValidator
+      }
+    },
+
+    computed: {
+      w: function () {
+        return widthAndHeightCoerce(this.width)
+      },
+
+      h: function () {
+        return widthAndHeightCoerce(this.height)
       }
     },
 
@@ -219,10 +229,10 @@
       }
     },
 
-    ready() {
+    mounted() {
       this.container = document.getElementById(this.containerId)
-      this.container.style.width = this.width
-      this.container.style.height = this.height
+      this.container.style.width = this.w
+      this.container.style.height = this.h
 
       this.content = document.getElementById(this.contentId)
       this.pullToRefreshLayer = this.content.getElementsByTagName("div")[0]
