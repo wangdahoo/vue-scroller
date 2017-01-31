@@ -61,7 +61,6 @@
 
       infinite() {
         setTimeout(() => {
-
           let start = this.bottom + 1
 
           for (let i = start; i < start + 10; i++) {
@@ -72,7 +71,7 @@
 
           setTimeout(() => {
             if (this.$refs.my_scroller)
-              this.$refs.my_scroller.resize()
+              this.$refs.my_scroller.finishInfinite()
           })
         }, 1500)
       },
