@@ -7,7 +7,7 @@ In purpose of smooth scrolling, pull to refresh and infinite loading.
 
 ## [Demo](https://wangdahoo.github.io/vue-scroller/)
 
-## How To Use
+## How to use
 
 ```html
 <div id="app">
@@ -21,6 +21,10 @@ In purpose of smooth scrolling, pull to refresh and infinite loading.
 ```
 
 [Live Code](https://jsfiddle.net/wangdahoo/cpjfr096/)
+
+## Webpack project by vue-cli
+
+https://github.com/wangdahoo/vue-scroller-demo
 
 ## API
 
