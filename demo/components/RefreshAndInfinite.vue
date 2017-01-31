@@ -3,7 +3,7 @@
     <nav-bar title="Refresh & Infinite"></nav-bar>
     <scroller style="top: 44px;"
               :on-refresh="refresh"
-              :on-infinite="loadMore"
+              :on-infinite="infinite"
               ref="my_scroller">
 
       <div v-for="(item, index) in items" @click="onItemClick(index, item)"
@@ -59,7 +59,7 @@
         }, 1500)
       },
 
-      loadMore() {
+      infinite() {
         setTimeout(() => {
 
           let start = this.bottom + 1

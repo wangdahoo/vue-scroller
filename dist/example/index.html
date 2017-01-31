@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <script src="https://unpkg.com/vue@1.0.28/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue@2.1/dist/vue.min.js"></script>
   <script src="../vue-scroller.min.js"></script>
   <title>Vue Scroller</title>
-
   <style>
     html, body {
       margin: 0;
@@ -49,38 +48,34 @@
       text-align: center;
       margin: 0 auto;
     }
-
   </style>
-
 </head>
 <body>
-
 <div id="app">
   <div class="header">
     <h1 class="title">Refresh & Infinite</h1>
   </div>
-
   <scroller :on-refresh="refresh"
             :on-infinite="infinite"
-            v-ref:my_scroller style="top: 44px;">
-    <div v-for="(index, item) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
+            ref="my_scroller" style="top: 44px;">
+    <div v-for="(item, index) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
       {{ item }}
     </div>
   </scroller>
 </div>
-
 <script>
-
-  var vm = new Vue({
+  new Vue({
     el: '#app',
+
     components: {
-      'Scroller': Scroller
+      Scroller
     },
+
     data: {
       items: []
     },
-
-    ready: function () {
+    
+    mounted: function () {
       for (var i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.');
       }
@@ -100,14 +95,11 @@
             this.items.splice(0, 0, i + ' - keep walking, be 2 with you.');
           }
           this.top = this.top - 10;
-
-          /* 下面2种方式都可以调用 finishPullToRefresh 方法 */
-          // this.$broadcast('$finishPullToRefresh');
           this.$refs.my_scroller.finishPullToRefresh();
         }, 1500)
       },
 
-      infinite() {
+      infinite: function () {
         setTimeout(() => {
           var start = this.bottom + 1;
           for (var i = start; i < start + 10; i++) {
@@ -121,8 +113,7 @@
         }, 1500)
       }
     }
-  })
-
+  });
 </script>
 </body>
 </html>

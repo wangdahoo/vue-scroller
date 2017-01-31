@@ -1,5 +1,5 @@
-var path = require('path')
-var webpack = require('webpack')
+var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: './demo/main.js',
@@ -45,21 +45,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-
-  if (process.env.BUILD == 'publish') {
-    module.exports.entry = './src/index.js';
-    module.exports.output = {
-      path: path.resolve(__dirname, './dist'),
-      filename: 'vue-scroller.min.js'
-    };
-
-    module.exports.resolve = {
-      alias: {
-        'vue$': 'vue/dist/vue.common.js'
-      }
-    }
-  }
-
+  
   module.exports.devtool = '#source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
@@ -78,4 +64,30 @@ if (process.env.NODE_ENV === 'production') {
       minimize: true
     })
   ])
+
+  if (process.env.BUILD == 'publish') {
+    module.exports.entry = './src/index.js';
+    module.exports.output = {
+      path: path.resolve(__dirname, './dist'),
+      filename: 'vue-scroller.min.js',
+      library: 'Scroller'
+    };
+
+    module.exports.resolve = {
+      alias: {
+        'vue$': 'vue/dist/vue.common.js'
+      }
+    };
+
+    // Banner
+    var moment = require('moment');
+    var pkg = require('./package.json');
+    var banner = 'Vue Scroller \nversion: ' + pkg.version + ' \nrepo: https://github.com/wangdahoo/vue-scroller \nbuild: ' + moment().format('YYYY-MM-DD HH:mm:ss')
+    module.exports.plugins.push(
+      new webpack.BannerPlugin({ 
+        banner: banner,
+        entryOnly: true 
+      })
+    );
+  }
 }
