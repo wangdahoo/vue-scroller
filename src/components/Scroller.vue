@@ -198,7 +198,22 @@
         type: String,
         default: '100%',
         validator: widthAndHeightValidator
-      }
+      },
+
+      snapping: {
+        type: Boolean,
+        default: false
+      },
+
+      snapWidth: {
+        type: Number,
+        default: 100
+      },
+
+      snapHeight: {
+        type: Number,
+        default: 100
+      },
     },
 
     computed: {
@@ -239,8 +254,13 @@
 
       let render = getContentRender(this.content)
 
-      this.scroller = new Scroller(render, {
+      let scrollerOptions = {
         scrollingX: false
+      }
+
+      this.scroller = new Scroller(render, {
+        scrollingX: false,
+        snapping: this.snapping
       });
 
       // enable PullToRefresh
@@ -281,6 +301,12 @@
       // setup scroller
       let rect = this.container.getBoundingClientRect()
       this.scroller.setPosition(rect.left + this.container.clientLeft, rect.top + this.container.clientTop)
+
+      // snapping
+      if (this.snapping) {
+        console.log(this.snapWidth, this.snapHeight)
+        this.scroller.setSnapSize(this.snapWidth, this.snapHeight)
+      }
 
       let delegate = {
         resize: this.resize,
