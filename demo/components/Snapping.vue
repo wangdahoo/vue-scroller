@@ -5,6 +5,7 @@
       ref="scroller" 
       :snapping="snapping"
       :snap-height="snapHeight"
+      :animationDuration="animationDuration"
       style="padding-top: 44px;">
       <div v-for="(item, index) in items"
           class="row"
@@ -31,6 +32,7 @@
       return {
         snapping: true,
         snapHeight: 50,
+        animationDuration: 150,
         items: []
       }
     },

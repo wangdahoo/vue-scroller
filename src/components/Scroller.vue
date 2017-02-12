@@ -214,6 +214,21 @@
         type: Number,
         default: 100
       },
+
+      animating: {
+        type: Boolean,
+        default: true
+      },
+
+      animationDuration: {
+        type: Number,
+        default: 250
+      },
+
+      bouncing: {
+        type: Boolean,
+        default: true
+      }
     },
 
     computed: {
@@ -260,8 +275,11 @@
 
       this.scroller = new Scroller(render, {
         scrollingX: false,
-        snapping: this.snapping
-      });
+        snapping: this.snapping,
+        animating: this.animating,
+        animationDuration: this.animationDuration,
+        bouncing: this.bouncing
+      })
 
       // enable PullToRefresh
       if (this.onRefresh) {
@@ -304,7 +322,7 @@
 
       // snapping
       if (this.snapping) {
-        console.log(this.snapWidth, this.snapHeight)
+        // console.log(this.snapWidth, this.snapHeight)
         this.scroller.setSnapSize(this.snapWidth, this.snapHeight)
       }
 
