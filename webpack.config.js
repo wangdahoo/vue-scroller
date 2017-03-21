@@ -6,7 +6,6 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './docs'),
     publicPath: '/dist/',
-    libraryTarget: "umd",
     filename: 'build.js'
   },
   module: {
@@ -71,6 +70,8 @@ if (process.env.NODE_ENV === 'production') {
     module.exports.output = {
       path: path.resolve(__dirname, './dist'),
       filename: 'vue-scroller.min.js',
+      libraryTarget: "umd",
+      umdNamedDefine: true,
       library: 'Scroller'
     };
 
