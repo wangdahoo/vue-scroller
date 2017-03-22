@@ -2,7 +2,7 @@
   "name": "vue-scroller",
   "version": "2.1.2",
   "description": "Vue component for smooth scrolling, pull to refresh & infinite loading.",
-  "main": "src/index.js",
+  "main": "dist/vue-scroller.min.js",
   "author": "wangdahoo <157195705@qq.com>",
   "homepage": "https://github.com/wangdahoo/vue-scroller",
   "repository": {
@@ -23,8 +23,7 @@
     "infinite load"
   ],
   "dependencies": {
-    "vue": "^2.1.0",
-    "vue-router": "^2.1.0"
+    "vue": "^2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -36,6 +35,7 @@
     "moment": "^2.17.1",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.0",
+    "vue-router": "^2.1.0",
     "vue-template-compiler": "^2.1.0",
     "webpack": "^2.1.0-beta.25",
     "webpack-dev-server": "^2.1.0-beta.0"
