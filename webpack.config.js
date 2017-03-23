@@ -35,6 +35,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.common.js',
       'vue-scroller': path.resolve(__dirname, './src')
+      // 'vue-scroller': path.resolve(__dirname, './dist/vue-scroller.min.js')
     }
   },
   devServer: {
@@ -70,7 +71,9 @@ if (process.env.NODE_ENV === 'production') {
     module.exports.output = {
       path: path.resolve(__dirname, './dist'),
       filename: 'vue-scroller.min.js',
-      library: 'Scroller'
+      library: 'VueScroller',
+      libraryTarget: 'umd',
+      umdNamedDefine: true
     };
 
     module.exports.resolve = {

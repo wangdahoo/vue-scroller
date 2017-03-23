@@ -1,10 +1,18 @@
 import Scroller from './components/Scroller.vue'
-export default Scroller
 
-if (typeof module != 'undefined' && module.exports) {
-  module.exports = Scroller;
-} else if (typeof define == 'function' && define.amd) {
-  define( function () { return Scroller; } );
-} else {
-  window.Scroller = Scroller;
+function install (Vue) {
+  if (install.installed) return
+  install.installed = true
+  Vue.component('scroller', Scroller)
 }
+
+const VueScroller = {
+  install: install,
+  Scroller
+}
+
+if (typeof window !== undefined && window.Vue) {
+  window.Vue.use(VueScroller)
+}
+
+export default VueScroller

@@ -28,12 +28,12 @@ https://github.com/wangdahoo/vue-scroller-demo
 
 ## API
 
-#### Methods of scroller instance:
+#### Scroller instance methods:
 
-- resize() :Void
-- triggerPullToRefresh() :Void
-- finishPullToRefresh() :Void
-- finishInfinite(isNoMoreData :Boolean) :Void
-- scrollTo(x:Integer, y:Integer, animate:Boolean) :Void
-- scrollBy(x:Integer, y:Integer, animate:Boolean) :Void
-- getPosition :Object
+- `resize()` resize scroller content
+- `triggerPullToRefresh()` start pull-to-refresh manually
+- `finishPullToRefresh()` stop pull-to-refresh
+- `finishInfinite(isNoMoreData :Boolean)` stop infinite-loading
+- `scrollTo(x:Integer, y:Integer, animate:Boolean)` scroll to a position in scroller content
+- `scrollBy(x:Integer, y:Integer, animate:Boolean)` scroll by a position in scroller content
+- `getPosition :Object` get current position of scroller content

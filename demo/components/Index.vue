@@ -107,13 +107,3 @@
 
 </style>
 
-<script>
-  import Scroller from 'vue-scroller'
-
-  export default {
-    components: {
-     Scroller
-    }
-  }
-</script>
-

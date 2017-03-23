@@ -57,7 +57,7 @@
   </div>
   <scroller :on-refresh="refresh"
             :on-infinite="infinite"
-            ref="my_scroller" style="top: 44px;">
+            ref="my_scroller" style="padding-top: 44px;">
     <div v-for="(item, index) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
       {{ item }}
     </div>
@@ -66,10 +66,6 @@
 <script>
   new Vue({
     el: '#app',
-
-    components: {
-      Scroller
-    },
 
     data: {
       items: []

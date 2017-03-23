@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
+
 // Vue.config.silent = true
 
 import App from './App.vue'
