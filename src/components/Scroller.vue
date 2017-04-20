@@ -298,7 +298,7 @@
             })
           })
 
-          this.onRefresh()
+          this.onRefresh(this.finishPullToRefresh)
         })
       }
 
@@ -311,7 +311,7 @@
             if (this.loadingState) return
             this.loadingState = 1
             this.showLoading = true
-            this.onInfinite()
+            this.onInfinite(this.finishInfinite)
           }
 
         }, 10);

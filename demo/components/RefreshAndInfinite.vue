@@ -39,7 +39,7 @@
     },
 
     methods: {
-      refresh() {
+      refresh(done) {
         setTimeout(() => {
           let start = this.top - 1
 
@@ -49,12 +49,11 @@
 
           this.top = this.top - 10;
 
-          if (this.$refs.my_scroller)
-            this.$refs.my_scroller.finishPullToRefresh()
+          done()
         }, 1500)
       },
 
-      infinite() {
+      infinite(done) {
         setTimeout(() => {
           let start = this.bottom + 1
 
@@ -62,12 +61,9 @@
             this.items.push(i + ' - keep walking, be 2 with you.')
           }
 
-          this.bottom = this.bottom + 10;
+          this.bottom = this.bottom + 10
 
-          setTimeout(() => {
-            if (this.$refs.my_scroller)
-              this.$refs.my_scroller.finishInfinite()
-          })
+          done()
         }, 1500)
       },
 
@@ -75,8 +71,5 @@
         console.log(index)
       }
     }
-
   }
 </script>
-
-
