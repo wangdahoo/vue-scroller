@@ -49,10 +49,6 @@
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
 
-      setTimeout(() => {
-        this.$refs.my_scroller.resize()
-      })
-
       this.timer = setInterval(() => {
         let {left, top} = this.$refs.my_scroller.getPosition()
 

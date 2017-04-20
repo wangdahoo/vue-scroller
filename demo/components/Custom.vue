@@ -60,11 +60,6 @@
       }
       this.top = 1
       this.bottom = 20
-
-      setTimeout(() => {
-        if (this.$refs.my_scroller)
-          this.$refs.my_scroller.resize()
-      })
     },
 
     methods: {
@@ -79,7 +74,7 @@
           if (this.$refs.my_scroller)
             this.$refs.my_scroller.finishPullToRefresh()
         }, 1500)
-      },
+      }
     }
 
   }

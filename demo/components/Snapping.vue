@@ -39,10 +39,6 @@
       for (let i = 1; i < 100; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
-
-      setTimeout(() => {
-        this.$refs.scroller.resize()
-      })
     }
   }
 </script>

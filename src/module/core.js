@@ -1,7 +1,7 @@
 (function(global) {
   var time = Date.now || function() {
-      return +new Date();
-    };
+    return +new Date();
+  };
   var desiredFrames = 60;
   var millisecondsPerSecond = 1000;
   var running = {};
@@ -10,7 +10,6 @@
   // Create namespaces
   if (!global.core) {
     global.core = { effect : {} };
-
   } else if (!core.effect) {
     core.effect = {};
   }

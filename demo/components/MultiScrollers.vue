@@ -44,11 +44,6 @@
       }
       this.top = [1, 1]
       this.bottom = [20, 20]
-
-      setTimeout(() => {
-        this.$refs.my_scroller_1.resize()
-        this.$refs.my_scroller_2.resize()
-      })
     },
 
     methods: {

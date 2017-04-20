@@ -255,7 +255,8 @@
         scroller: undefined,
         pullToRefreshLayer: undefined,
         mousedown: false,
-        infiniteTimer: undefined
+        infiniteTimer: undefined,
+        resizeTimer: undefined
       }
     },
 
@@ -326,16 +327,28 @@
         this.scroller.setSnapSize(this.snapWidth, this.snapHeight)
       }
 
-      let delegate = {
-        resize: this.resize,
-        finishPullToRefresh: this.finishPullToRefresh,
-        triggerPullToRefresh: this.triggerPullToRefresh,
-        scrollTo: this.scrollTo,
-        scrollBy: this.scrollBy
+      // onContentResize
+      const contentSize = () => {
+        return {
+          width: this.content.offsetWidth,
+          height: this.content.offsetHeight
+        }
       }
+
+      let { content_width, content_height } = contentSize()
+      
+      this.resizeTimer = setInterval(() => {
+        let {width, height} = contentSize()
+        if (width !== content_width || height !== content_height) {
+          content_width = width
+          content_height = height
+          this.resize()
+        }
+      }, 10);
     },
 
     destroyed() {
+      clearInterval(this.resizeTimer);
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
     },
 
@@ -348,9 +361,15 @@
 
       finishPullToRefresh() {
         this.scroller.finishPullToRefresh()
-        setTimeout(() => {
-          this.resize()
-        })
+      },
+
+      finishInfinite(hideSpinner) {
+        this.loadingState = hideSpinner ? 2 : 0
+        this.showLoading = false
+
+        if (this.loadingState == 2) {
+          this.resetLoadingState()
+        }
       },
 
       triggerPullToRefresh() {
@@ -434,16 +453,6 @@
           }, 1000)
         } else {
           this.loadingState = 0
-        }
-      },
-
-      finishInfinite(hideSpinner) {
-        this.loadingState = hideSpinner ? 2 : 0
-        this.showLoading = false
-        this.resize()
-
-        if (this.loadingState == 2) {
-          this.resetLoadingState()
         }
       }
     }
