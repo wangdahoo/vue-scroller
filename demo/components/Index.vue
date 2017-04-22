@@ -31,7 +31,12 @@
         <img src="../assets/arrow-right.png" class="arrow-right">
       </router-link>
 
-      <router-link class="row" tag="label" to="/custom">
+      <router-link class="row" tag="label" to="/customSpinner">
+        Custom Spinner
+        <img src="../assets/arrow-right.png" class="arrow-right">
+      </router-link>
+
+      <router-link class="row grey-bg" tag="label" to="/custom">
         陈妍希
         <img src="../assets/arrow-right.png" class="arrow-right">
       </router-link>

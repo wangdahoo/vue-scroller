@@ -1,20 +1,26 @@
 <template>
   <div class="_v-container" :id="containerId"
-       @touchstart="touchStart($event)"
-       @touchmove="touchMove($event)"
-       @touchend="touchEnd($event)"
-       @mousedown="mouseDown($event)"
-       @mousemove="mouseMove($event)"
-       @mouseup="mouseUp($event)"
+    @touchstart="touchStart($event)"
+    @touchmove="touchMove($event)"
+    @touchend="touchEnd($event)"
+    @mousedown="mouseDown($event)"
+    @mousemove="mouseMove($event)"
+    @mouseup="mouseUp($event)"
   >
-
     <div class="_v-content" :id="contentId">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
-           :class="{'active': state == 1, 'active refreshing': state == 2}">
+        :class="{'active': state == 1, 'active refreshing': state == 2}"
+      >
         <span class="spinner-holder">
-          <img class="arrow" v-if="state != 2" src="../assets/arrow.svg">
-          <span class="text" v-if="state != 2">{{ refreshText }}</span>
-          <spinner class="spinner" v-if="state == 2"></spinner>
+          <arrow class="arrow" :fillColor="refreshLayerColor" v-if="state != 2"></arrow>
+
+          <span class="text" v-if="state != 2" :style="{color: refreshLayerColor}" v-text="refreshText"></span>
+
+          <span v-if="state == 2">
+            <slot name="refresh-spinner">
+              <spinner :style="{fill: refreshLayerColor, stroke: refreshLayerColor}"></spinner>
+            </slot>
+          </span>
         </span>
       </div>
 
@@ -22,11 +28,14 @@
 
       <div v-if="onInfinite" class="loading-layer">
         <span class="spinner-holder" :class="{'active': showLoading}">
-          <spinner class="spinner"></spinner>
+          <slot name="infinite-spinner">
+            <spinner :style="{fill: loadingLayerColor, stroke: loadingLayerColor}"></spinner>
+          </slot>
         </span>
 
         <div class="no-data-text"
-          :class="{'active': !showLoading && loadingState == 2}" v-text="noDataText">
+          :class="{'active': !showLoading && loadingState == 2}" :style="{color: loadingLayerColor}" 
+          v-text="noDataText">
         </div>
       </div>
     </div>
@@ -72,7 +81,7 @@
     margin-top: -60px;
     text-align: center;
     font-size: 16px;
-    color: #ccc;
+    color: #AAA;
   }
 
   ._v-container > ._v-content > .loading-layer {
@@ -81,7 +90,7 @@
     text-align: center;
     font-size: 16px;
     line-height: 60px;
-    color: #ccc;
+    color: #AAA;
     position: relative;
   }
 
@@ -142,7 +151,6 @@
     margin-top: 14px;
     width: 32px;
     height: 32px;
-
     fill: #444;
     stroke: #69717d;
   }
@@ -156,6 +164,7 @@
   import Scroller from '../module/core'
   import getContentRender from '../module/render'
   import Spinner from './Spinner.vue'
+  import Arrow from './Arrow.vue'
 
   const re = /^[\d]+(\%)?$/
 
@@ -170,7 +179,8 @@
 
   export default {
     components: {
-      Spinner
+      Spinner,
+      Arrow
     },
 
     props: {
@@ -227,6 +237,16 @@
       bouncing: {
         type: Boolean,
         default: true
+      },
+
+      refreshLayerColor: {
+        type: String,
+        default: '#AAA'
+      },
+
+      loadingLayerColor: {
+        type: String,
+        default: '#AAA'
       }
     },
 
@@ -240,7 +260,7 @@
       }
     },
 
-    data(){
+    data() {
       return {
         containerId: 'outer-' + Math.random().toString(36).substring(3, 8),
         contentId: 'inner-' + Math.random().toString(36).substring(3, 8),

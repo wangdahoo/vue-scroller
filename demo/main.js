@@ -16,15 +16,17 @@ import Custom from './components/Custom.vue'
 import MultiScrollers from './components/MultiScrollers.vue'
 import LoadMoreAndNoData from './components/LoadMoreAndNoData.vue'
 import Snapping from './components/Snapping.vue'
+import CustomSpinner from './components/CustomSpinner.vue'
 
 const routes = [
   { path: '/', component: Index },
   { path: '/refreshAndInfinite', component: RefreshAndInfinite },
   { path: '/smoothingScroll', component: SmoothingScroll },
   { path: '/custom', component: Custom },
+  { path: '/customSpinner', component: CustomSpinner },
   { path: '/multiScrollers', component: MultiScrollers },
   { path: '/loadMoreAndNoData', component: LoadMoreAndNoData },
-  { path: '/Snapping', component: Snapping },
+  { path: '/snapping', component: Snapping },
 ]
 
 const router = new VueRouter({
