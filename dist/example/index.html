@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <script src="https://unpkg.com/vue@2.1/dist/vue.min.js"></script>
+  <script src="https://unpkg.com/vue@2.2.6/dist/vue.min.js"></script>
   <script src="../vue-scroller.min.js"></script>
   <title>Vue Scroller</title>
   <style>
@@ -57,7 +57,7 @@
   </div>
   <scroller :on-refresh="refresh"
             :on-infinite="infinite"
-            ref="my_scroller" style="padding-top: 44px;">
+            style="padding-top: 44px;">
     <div v-for="(item, index) in items" class="row" :class="{'grey-bg': index % 2 == 0}">
       {{ item }}
     </div>
@@ -77,35 +77,30 @@
       }
       this.top = 1;
       this.bottom = 20;
-
-      setTimeout(() => {
-        this.$refs.my_scroller.resize();
-      })
     },
 
     methods: {
-      refresh: function () {
-        setTimeout(() => {
-          var start = this.top - 1
+      refresh: function (done) {
+        var self = this
+        setTimeout(function () {
+          var start = self.top - 1
           for (var i = start; i > start - 10; i--) {
-            this.items.splice(0, 0, i + ' - keep walking, be 2 with you.');
+            self.items.splice(0, 0, i + ' - keep walking, be 2 with you.');
           }
-          this.top = this.top - 10;
-          this.$refs.my_scroller.finishPullToRefresh();
+          self.top = self.top - 10;
+          done();
         }, 1500)
       },
 
-      infinite: function () {
-        setTimeout(() => {
-          var start = this.bottom + 1;
+      infinite: function (done) {
+        var self = this
+        setTimeout(function () {
+          var start = self.bottom + 1;
           for (var i = start; i < start + 10; i++) {
-            this.items.push(i + ' - keep walking, be 2 with you.');
+            self.items.push(i + ' - keep walking, be 2 with you.');
           }
-          this.bottom = this.bottom + 10;
-
-          setTimeout(() => {
-            this.$refs.my_scroller.finishInfinite();
-          })
+          self.bottom = self.bottom + 10;
+          done();
         }, 1500)
       }
     }
