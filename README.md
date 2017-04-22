@@ -11,6 +11,17 @@ In purpose of smooth scrolling, pull to refresh and infinite loading.
 
 ## How to use
 
+```bash
+npm i vue-scroller -S
+```
+
+```js
+/* ignore this if you include vue-scroller.js by <script> tag from a cdn, such as unpkg */
+import Vue from 'vue'
+import VueScroller from 'vue-scroller'
+Vue.use(VueScroller)
+```
+
 ```html
 <scroller 
   :on-refresh="refresh"
@@ -29,7 +40,7 @@ https://github.com/wangdahoo/vue-scroller-demo
 
 #### Scroller instance methods:
 
-- `resize()` resize scroller content (**deprecated, casuse the scroller's content resizes self automatically**)
+- `resize()` resize scroller content (**deprecated, cause the scroller's content resizes self automatically**)
 - `triggerPullToRefresh()` start pull-to-refresh manually
 - `finishPullToRefresh()` stop pull-to-refresh
 - `finishInfinite(isNoMoreData :Boolean)` stop infinite-loading
