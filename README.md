@@ -30,7 +30,7 @@ https://github.com/wangdahoo/vue-scroller-demo
 #### Scroller instance methods:
 
 - `resize()` resize scroller content
-  > Deprecated, casuse the scroller's content resizes self automatically.
+> Deprecated, casuse the scroller's content resizes self automatically.
 - `triggerPullToRefresh()` start pull-to-refresh manually
 - `finishPullToRefresh()` stop pull-to-refresh
 - `finishInfinite(isNoMoreData :Boolean)` stop infinite-loading
