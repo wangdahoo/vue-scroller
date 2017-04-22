@@ -33,10 +33,10 @@
     },
 
     methods: {
-      infinite() {
+      infinite(done) {
         if (this.bottom >= 30) {
           setTimeout(() => {
-            this.$refs.my_scroller.finishInfinite(true)
+            done(true)
           }, 1500)
           return;
         }
@@ -48,12 +48,10 @@
           }
           this.bottom = this.bottom + 10;
           setTimeout(() => {
-            this.$refs.my_scroller.finishInfinite()
+            done()
           })
         }, 1500)
       }
     }
   }
 </script>
-
-

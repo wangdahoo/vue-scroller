@@ -37,7 +37,7 @@
       }
     },
 
-    mounted() {
+    mounted () {
       for (let i = 1; i <= 20; i++) {
         this.items1.push(i + ' - Scroller 1')
         this.items2.push(i + ' - Scroller 2')
@@ -47,32 +47,27 @@
     },
 
     methods: {
-      refresh() {
+      refresh (done) {
         setTimeout(() => {
           let start = this.top[0] - 1
           for (let i = start; i > start - 10; i--) {
             this.items1.splice(0, 0, i + ' - Scroller 1')
           }
           this.top[0] = this.top[0] - 10;
-          if (this.$refs.my_scroller_1)
-            this.$refs.my_scroller_1.finishPullToRefresh()
+          done()
         }, 1500)
       },
 
-      refresh2() {
+      refresh2 (done) {
         setTimeout(() => {
           let start = this.top[1] - 1
           for (let i = start; i > start - 10; i--) {
             this.items2.splice(0, 0, i + ' - Scroller 2')
           }
           this.top[1] = this.top[1] - 10;
-          if (this.$refs.my_scroller_2)
-            this.$refs.my_scroller_2.finishPullToRefresh()
+          done()
         }, 1500)
       }
     }
-
   }
 </script>
-
-

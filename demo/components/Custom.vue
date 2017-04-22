@@ -63,16 +63,14 @@
     },
 
     methods: {
-      refresh() {
+      refresh(done) {
         setTimeout(() => {
           let start = this.top - 1
           for (let i = start; i > start - 10; i--) {
             this.items.splice(0, 0, i + ' - keep walking, be 2 with you.')
           }
           this.top = this.top - 10;
-
-          if (this.$refs.my_scroller)
-            this.$refs.my_scroller.finishPullToRefresh()
+          done()
         }, 1500)
       }
     }

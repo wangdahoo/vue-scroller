@@ -143,7 +143,6 @@
     width: 32px;
     height: 32px;
 
-    // svg style
     fill: #444;
     stroke: #69717d;
   }

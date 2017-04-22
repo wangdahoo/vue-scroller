@@ -60,6 +60,5 @@
     beforeDestroy() {
       clearInterval(this.timer)
     }
-
   }
 </script>
