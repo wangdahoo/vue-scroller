@@ -247,7 +247,9 @@
       loadingLayerColor: {
         type: String,
         default: '#AAA'
-      }
+      },
+
+      cssClass: String // content css class
     },
 
     computed: {
@@ -285,6 +287,7 @@
       this.container.style.height = this.h
 
       this.content = document.getElementById(this.contentId)
+      if (this.cssClass) this.content.classList.add(this.cssClass)
       this.pullToRefreshLayer = this.content.getElementsByTagName("div")[0]
 
       let render = getContentRender(this.content)
