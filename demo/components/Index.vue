@@ -60,6 +60,7 @@
   }
 
   .plugin-name {
+    margin: 0;
     padding-top: 60px;
     text-align: center;
     color: #666;
