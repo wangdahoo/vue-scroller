@@ -26,7 +26,7 @@ const routes = [
   { path: '/customSpinner', component: CustomSpinner },
   { path: '/multiScrollers', component: MultiScrollers },
   { path: '/loadMoreAndNoData', component: LoadMoreAndNoData },
-  { path: '/snapping', component: Snapping },
+  { path: '/snapping', component: Snapping }
 ]
 
 const router = new VueRouter({

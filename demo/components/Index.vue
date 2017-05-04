@@ -1,6 +1,6 @@
 <template>
   <div>
-    <scroller>
+    <scroller css-class="custom-clazz">
       <h1 class="plugin-name">
         Scroller
       </h1>
