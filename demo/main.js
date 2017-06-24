@@ -17,6 +17,7 @@ import MultiScrollers from './components/MultiScrollers.vue'
 import LoadMoreAndNoData from './components/LoadMoreAndNoData.vue'
 import Snapping from './components/Snapping.vue'
 import CustomSpinner from './components/CustomSpinner.vue'
+import NoContent from './components/NoContent.vue'
 
 const routes = [
   { path: '/', component: Index },
@@ -26,7 +27,8 @@ const routes = [
   { path: '/customSpinner', component: CustomSpinner },
   { path: '/multiScrollers', component: MultiScrollers },
   { path: '/loadMoreAndNoData', component: LoadMoreAndNoData },
-  { path: '/snapping', component: Snapping }
+  { path: '/snapping', component: Snapping },
+  { path: '/noContent', component: NoContent }
 ]
 
 const router = new VueRouter({

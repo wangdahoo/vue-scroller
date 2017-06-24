@@ -26,7 +26,7 @@
 
       <slot></slot>
 
-      <div v-if="onInfinite" class="loading-layer">
+      <div v-if="showInfiniteLayer" class="loading-layer">
         <span class="spinner-holder" :class="{'active': showLoading}">
           <slot name="infinite-spinner">
             <spinner :style="{fill: loadingLayerColor, stroke: loadingLayerColor}"></spinner>
@@ -249,7 +249,11 @@
         default: '#AAA'
       },
 
-      cssClass: String // content css class
+      cssClass: String, // content css class
+      minContentHeight: {
+        type: Number,
+        default: 0 // px
+      }
     },
 
     computed: {
@@ -278,6 +282,19 @@
         mousedown: false,
         infiniteTimer: undefined,
         resizeTimer: undefined
+      }
+    },
+
+    computed: {
+      showInfiniteLayer () {
+        let contentHeight = 0 
+        this.content
+          ? contentHeight = this.content.offsetHeight
+          : void 666
+
+        return this.onInfinite
+          ? contentHeight > this.minContentHeight
+          : false
       }
     },
 
