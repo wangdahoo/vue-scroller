@@ -1,6 +1,6 @@
 {
   "name": "vue-scroller",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Vue component for smooth scrolling, pull to refresh & infinite loading.",
   "main": "dist/vue-scroller.min.js",
   "author": "wangdahoo <157195705@qq.com>",

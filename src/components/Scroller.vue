@@ -250,6 +250,7 @@
       },
 
       cssClass: String, // content css class
+
       minContentHeight: {
         type: Number,
         default: 0 // px
@@ -263,6 +264,17 @@
 
       h: function () {
         return widthAndHeightCoerce(this.height)
+      },
+
+      showInfiniteLayer () {
+        let contentHeight = 0 
+        this.content
+          ? contentHeight = this.content.offsetHeight
+          : void 666
+
+        return this.onInfinite
+          ? contentHeight > this.minContentHeight
+          : false
       }
     },
 
@@ -282,19 +294,6 @@
         mousedown: false,
         infiniteTimer: undefined,
         resizeTimer: undefined
-      }
-    },
-
-    computed: {
-      showInfiniteLayer () {
-        let contentHeight = 0 
-        this.content
-          ? contentHeight = this.content.offsetHeight
-          : void 666
-
-        return this.onInfinite
-          ? contentHeight > this.minContentHeight
-          : false
       }
     },
 
