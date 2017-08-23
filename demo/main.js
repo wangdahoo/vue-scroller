@@ -19,6 +19,7 @@ import Snapping from './components/Snapping.vue'
 import CustomSpinner from './components/CustomSpinner.vue'
 import NoContent from './components/NoContent.vue'
 import KeepAlive from './components/KeepAlive.vue'
+import LoadMoreAndNoData2 from './components/LoadMoreAndNoData2.vue'
 
 const routes = [
   { path: '/', component: Index },
@@ -30,7 +31,8 @@ const routes = [
   { path: '/loadMoreAndNoData', component: LoadMoreAndNoData },
   { path: '/snapping', component: Snapping },
   { path: '/noContent', component: NoContent },
-  { path: '/keepAlive', component: KeepAlive }
+  { path: '/keepAlive', component: KeepAlive },
+  { path: '/loadMoreAndNoData2', component: LoadMoreAndNoData2 }
 ]
 
 const router = new VueRouter({
