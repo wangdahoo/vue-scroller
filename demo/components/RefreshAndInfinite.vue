@@ -54,6 +54,8 @@
       },
 
       infinite(done) {
+        console.log('infinite called..')
+        
         setTimeout(() => {
           let start = this.bottom + 1
 

@@ -297,7 +297,7 @@
       }
     },
 
-    mounted() {
+    activated () {
       this.container = document.getElementById(this.containerId)
       this.container.style.width = this.w
       this.container.style.height = this.h
@@ -385,7 +385,7 @@
       }, 10);
     },
 
-    destroyed() {
+    deactivated () {
       clearInterval(this.resizeTimer);
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
     },
