@@ -8,7 +8,7 @@
     @mouseup="mouseUp($event)"
   >
     <div class="_v-content" :id="contentId">
-      <div v-if="onRefresh" class="pull-to-refresh-layer"
+      <div v-if="enabledRefresh" class="pull-to-refresh-layer"
         :class="{'active': state == 1, 'active refreshing': state == 2}"
       >
         <span class="spinner-holder">
@@ -187,6 +187,15 @@
       onRefresh: Function,
       onInfinite: Function,
 
+      enabledRefresh: {
+        type: Boolean,
+        default: false
+      },
+      enabledInfinite: {
+        type: Boolean,
+        default: false
+      },
+
       refreshText: {
         type: String,
         default: '下拉刷新'
@@ -297,7 +306,7 @@
       }
     },
 
-    activated () {
+    mounted () {
       this.container = document.getElementById(this.containerId)
       this.container.style.width = this.w
       this.container.style.height = this.h
@@ -321,7 +330,7 @@
       })
 
       // enable PullToRefresh
-      if (this.onRefresh) {
+      if (this.enabledRefresh) {
         this.scroller.activatePullToRefresh(60, () => {
           this.state = 1
         }, () => {
@@ -336,12 +345,12 @@
             })
           })
 
-          this.onRefresh(this.finishPullToRefresh)
+          this.onRefresh && this.onRefresh(this.finishPullToRefresh)
         })
       }
 
       // enable infinite loading
-      if (this.onInfinite) {
+      if (this.enabledInfinite) {
         this.infiniteTimer = setInterval(() => {
           let {left, top, zoom} = this.scroller.getValues()
 
@@ -349,7 +358,7 @@
             if (this.loadingState) return
             this.loadingState = 1
             this.showLoading = true
-            this.onInfinite(this.finishInfinite)
+            this.onInfinite && this.onInfinite(this.finishInfinite)
           }
 
         }, 10);
@@ -385,7 +394,7 @@
       }, 10);
     },
 
-    deactivated () {
+    destroyed () {
       clearInterval(this.resizeTimer);
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
     },
