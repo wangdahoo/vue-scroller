@@ -184,6 +184,14 @@
     },
 
     props: {
+      enabledRefresh: {
+        type: Boolean,
+        default: false
+      },
+      enabledInfinite: {
+        type: Boolean,
+        default: false
+      },
       onRefresh: Function,
       onInfinite: Function,
 
@@ -321,7 +329,7 @@
       })
 
       // enable PullToRefresh
-      if (this.onRefresh) {
+      if (this.enabledRefresh) {
         this.scroller.activatePullToRefresh(60, () => {
           this.state = 1
         }, () => {
@@ -336,12 +344,12 @@
             })
           })
 
-          this.onRefresh(this.finishPullToRefresh)
+          this.onRefresh && this.onRefresh(this.finishPullToRefresh)
         })
       }
 
       // enable infinite loading
-      if (this.onInfinite) {
+      if (this.enabledInfinite) {
         this.infiniteTimer = setInterval(() => {
           let {left, top, zoom} = this.scroller.getValues()
 
@@ -349,7 +357,7 @@
             if (this.loadingState) return
             this.loadingState = 1
             this.showLoading = true
-            this.onInfinite(this.finishInfinite)
+            this.onInfinite && this.onInfinite(this.finishInfinite)
           }
 
         }, 10);
