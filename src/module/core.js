@@ -564,6 +564,21 @@
 
 
 		/**
+		 * disable pull-to-refresh
+		 */
+		disablePullToRefresh: function() {
+
+			var self = this;
+
+			self.__refreshHeight = null;
+			self.__refreshActivate = null;
+			self.__refreshDeactivate = null;
+			self.__refreshStart = null;
+
+		},
+
+
+		/**
 		 * Starts pull-to-refresh manually.
 		 */
 		triggerPullToRefresh: function() {

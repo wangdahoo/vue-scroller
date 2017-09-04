@@ -177,6 +177,9 @@
     return re.test(v)
   }
 
+  let lastEnabledRefresh;
+  let lastEnabledInfinite;
+
   export default {
     components: {
       Spinner,
@@ -329,41 +332,6 @@
         bouncing: this.bouncing
       })
 
-      // enable PullToRefresh
-      if (this.enabledRefresh) {
-        this.scroller.activatePullToRefresh(60, () => {
-          this.state = 1
-        }, () => {
-          this.state = 0
-        }, () => {
-          this.state = 2
-
-          this.$on('$finishPullToRefresh', () => {
-            setTimeout(() => {
-              this.state = 0
-              this.finishPullToRefresh()
-            })
-          })
-
-          this.onRefresh && this.onRefresh(this.finishPullToRefresh)
-        })
-      }
-
-      // enable infinite loading
-      if (this.enabledInfinite) {
-        this.infiniteTimer = setInterval(() => {
-          let {left, top, zoom} = this.scroller.getValues()
-
-          if (top + 60 > this.content.offsetHeight - this.container.clientHeight) {
-            if (this.loadingState) return
-            this.loadingState = 1
-            this.showLoading = true
-            this.onInfinite && this.onInfinite(this.finishInfinite)
-          }
-
-        }, 10);
-      }
-
       // setup scroller
       let rect = this.container.getBoundingClientRect()
       this.scroller.setPosition(rect.left + this.container.clientLeft, rect.top + this.container.clientTop)
@@ -394,6 +362,57 @@
       }, 10);
     },
 
+    updated () {
+      // enable PullToRefresh
+      if (lastEnabledRefresh !== this.enabledRefresh) {
+        lastEnabledRefresh = this.enabledRefresh;
+
+        if (this.enabledRefresh) {
+          this.scroller.activatePullToRefresh(60, () => {
+            this.state = 1
+          }, () => {
+            this.state = 0
+          }, () => {
+            this.state = 2
+
+            this.$on('$finishPullToRefresh', () => {
+              setTimeout(() => {
+                this.state = 0
+                this.finishPullToRefresh()
+              })
+            })
+
+            this.onRefresh && this.onRefresh(this.finishPullToRefresh)
+          })
+        } else {
+          this.scroller.disablePullToRefresh();
+        }
+      }
+
+      // enable infinite loading
+      if (lastEnabledInfinite !== this.enabledInfinite) {
+        lastEnabledInfinite = this.enabledInfinite;
+
+        if (this.enabledInfinite) {
+          clearInterval(this.infiniteTimer);
+          this.infiniteTimer = setInterval(() => {
+            let {left, top, zoom} = this.scroller.getValues()
+
+            if (top + 60 > this.content.offsetHeight - this.container.clientHeight) {
+              if (this.loadingState) return
+              this.loadingState = 1
+              this.showLoading = true
+              this.onInfinite && this.onInfinite(this.finishInfinite)
+            }
+
+          }, 10);
+        } else {
+          this.infiniteTimer = clearInterval(this.infiniteTimer);
+          this.finishInfinite();
+        }
+      }
+    },
+
     destroyed () {
       clearInterval(this.resizeTimer);
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
@@ -414,9 +433,9 @@
         this.loadingState = hideSpinner ? 2 : 0
         this.showLoading = false
 
-        if (this.loadingState == 2) {
-          this.resetLoadingState()
-        }
+        //if (this.loadingState == 2) {
+        //  this.resetLoadingState()
+        //}
       },
 
       triggerPullToRefresh() {
