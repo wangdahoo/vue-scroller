@@ -2,7 +2,7 @@
   <div>
     <nav-bar title="陈妍希"></nav-bar>
 
-    <scroller style="top: 44px;"
+    <scroller style="padding-top: 44px;"
       :on-refresh="refresh" ref="my_scroller" class="my-scroller">
       <div v-for="(item, index) in items"
           class="row"

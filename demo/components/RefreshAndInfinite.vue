@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav-bar title="Refresh & Infinite"></nav-bar>
-    <scroller style="top: 44px;"
+    <scroller style="padding-top: 44px;"
               :on-refresh="refresh"
               :on-infinite="infinite"
               ref="my_scroller">
@@ -29,13 +29,12 @@
     },
 
     mounted() {
-
       for (let i = 1; i <= 20; i++) {
         this.items.push(i + ' - keep walking, be 2 with you.')
       }
+
       this.top = 1
       this.bottom = 20
-      
     },
 
     methods: {

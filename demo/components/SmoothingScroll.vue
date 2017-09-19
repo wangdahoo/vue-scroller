@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav-bar title="Smoothing Scroll"></nav-bar>
-    <scroller ref="my_scroller" style="top: 44px;">
+    <scroller ref="my_scroller" style="padding-top: 44px;">
       <div v-for="(item, index) in items"
           class="row"
           :class="{'grey-bg': index % 2 == 0}">

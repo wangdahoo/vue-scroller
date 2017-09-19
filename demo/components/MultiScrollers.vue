@@ -2,7 +2,7 @@
   <div>
     <nav-bar title="Multi Scrollers"></nav-bar>
 
-    <scroller width="50%" style="top: 44px"
+    <scroller width="50%" style="padding-top: 44px"
               :on-refresh="refresh"
               ref="my_scroller_1">
       <div v-for="(item, index) in items1"
@@ -11,7 +11,7 @@
       </div>
     </scroller>
 
-    <scroller width="50%" style="left: 50%; top: 44px"
+    <scroller width="50%" style="left: 50%; padding-top: 44px"
               :on-refresh="refresh2"
               ref="my_scroller_2">
       <div v-for="(item, index) in items2"
