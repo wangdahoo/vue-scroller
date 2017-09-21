@@ -297,7 +297,7 @@
       }
     },
 
-    activated () {
+    mounted () {
       this.container = document.getElementById(this.containerId)
       this.container.style.width = this.w
       this.container.style.height = this.h
@@ -345,13 +345,14 @@
         this.infiniteTimer = setInterval(() => {
           let {left, top, zoom} = this.scroller.getValues()
 
-          if (top + 60 > this.content.offsetHeight - this.container.clientHeight) {
+          // 在 keep alive 中 deactivated 的组件长宽变为 0 
+          if (this.content.offsetHeight > 0 && 
+            top + 60 > this.content.offsetHeight - this.container.clientHeight) {
             if (this.loadingState) return
             this.loadingState = 1
             this.showLoading = true
             this.onInfinite(this.finishInfinite)
           }
-
         }, 10);
       }
 
@@ -385,7 +386,7 @@
       }, 10);
     },
 
-    deactivated () {
+    destroyed () {
       clearInterval(this.resizeTimer);
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
     },
