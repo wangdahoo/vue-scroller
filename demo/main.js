@@ -9,16 +9,18 @@ Vue.use(VueScroller)
 
 import App from './App.vue'
 
-import Index from './components/Index.vue'
-import RefreshAndInfinite from './components/RefreshAndInfinite.vue'
-import SmoothingScroll from './components/SmoothingScroll.vue'
-import Custom from './components/Custom.vue'
-import MultiScrollers from './components/MultiScrollers.vue'
-import LoadMoreAndNoData from './components/LoadMoreAndNoData.vue'
-import Snapping from './components/Snapping.vue'
-import CustomSpinner from './components/CustomSpinner.vue'
-import NoContent from './components/NoContent.vue'
-import LoadMoreAndNoData2 from './components/LoadMoreAndNoData2.vue'
+import Index from './views/Index.vue'
+import RefreshAndInfinite from './views/RefreshAndInfinite.vue'
+import SmoothingScroll from './views/SmoothingScroll.vue'
+import Custom from './views/Custom.vue'
+import MultiScrollers from './views/MultiScrollers.vue'
+import LoadMoreAndNoData from './views/LoadMoreAndNoData.vue'
+import Snapping from './views/Snapping.vue'
+import CustomSpinner from './views/CustomSpinner.vue'
+import NoContent from './views/NoContent.vue'
+import LoadMoreAndNoData2 from './views/LoadMoreAndNoData2.vue'
+import Master from './views/MasterDetail/Master.vue'
+import Detail from './views/MasterDetail/Detail.vue'
 
 const routes = [
   { path: '/', component: Index },
@@ -30,7 +32,9 @@ const routes = [
   { path: '/loadMoreAndNoData', component: LoadMoreAndNoData },
   { path: '/snapping', component: Snapping },
   { path: '/noContent', component: NoContent },
-  { path: '/loadMoreAndNoData2', component: LoadMoreAndNoData2 }
+  { path: '/loadMoreAndNoData2', component: LoadMoreAndNoData2 },
+  { path: '/master-detail', component: Master },
+  { path: '/master-detail/:id', component: Detail },
 ]
 
 const router = new VueRouter({

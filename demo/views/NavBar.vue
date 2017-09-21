@@ -1,8 +1,8 @@
 <template>
   <div class="nav-bar">
-    <router-link class="btn-back" tag="div" to="/">
+    <div class="btn-back" @click="back">
       <img class="arrow-back" src="../assets/arrow-back.png">
-    </router-link>
+    </div>
 
     <div class="title" v-if="title">
       {{title}}
@@ -48,6 +48,17 @@
     props: {
       title: {
         type: String
+      },
+
+      backTo: {
+        type: String,
+        default: '/'
+      }
+    },
+
+    methods: {
+      back () {
+        this.$router.push(this.backTo)
       }
     }
   }
