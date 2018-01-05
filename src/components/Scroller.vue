@@ -1,11 +1,7 @@
 <template>
   <div class="_v-container" :id="containerId"
     @touchstart="touchStart($event)"
-    @touchmove="touchMove($event)"
-    @touchend="touchEnd($event)"
     @mousedown="mouseDown($event)"
-    @mousemove="mouseMove($event)"
-    @mouseup="mouseUp($event)"
   >
     <div class="_v-content" :id="contentId">
       <div v-if="onRefresh" class="pull-to-refresh-layer"
@@ -428,15 +424,30 @@
         if (e.target.tagName.match(/input|textarea|select/i)) {
           return
         }
+        // add Event to document
+        document.addEventListener('mousemove', this.mouseMove, false)
+        document.addEventListener('touchmove', this.touchMove, false)
+        document.addEventListener('mouseup', this.mouseUp)
+        document.addEventListener('touchend', this.touchEnd)
+
         this.scroller.doTouchStart(e.touches, e.timeStamp)
       },
 
       touchMove(e) {
         e.preventDefault()
+        // IOS: outside of webview
+        if (e.changedTouches[0].pageY > document.documentElement.clientHeight || e.changedTouches[0].pageY < 0) {
+          document.dispatchEvent(new Event('touchend'))
+          return          
+        }
         this.scroller.doTouchMove(e.touches, e.timeStamp)
       },
 
       touchEnd(e) {
+        document.removeEventListener('mousemove', this.mouseMove)
+        document.removeEventListener('touchmove', this.touchMove)
+        document.removeEventListener('mouseup', this.mouseUp)
+        document.removeEventListener('touchend', this.touchEnd)
         this.scroller.doTouchEnd(e.timeStamp)
       },
 
@@ -456,6 +467,11 @@
         if (!this.mousedown) {
           return
         }
+        // IOS: outside of webview
+        if (e.pageX > document.documentElement.clientHeight || e.pageX < 0) {
+          document.dispatchEvent(new Event('touchend'))
+          return          
+        }
         this.scroller.doTouchMove([{
           pageX: e.pageX,
           pageY: e.pageY
@@ -467,6 +483,10 @@
         if (!this.mousedown) {
           return
         }
+        document.removeEventListener('mousemove', this.mouseMove)
+        document.removeEventListener('touchmove', this.touchMove)
+        document.removeEventListener('mouseup', this.mouseUp)
+        document.removeEventListener('touchend', this.touchEnd)
         this.scroller.doTouchEnd(e.timeStamp)
         this.mousedown = false
       },
