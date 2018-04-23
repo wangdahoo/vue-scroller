@@ -173,6 +173,18 @@
     return re.test(v)
   }
 
+  var supportsPassive = false;
+  try {
+    var opts = Object.defineProperty({}, 'passive', {
+      get: function() {
+        supportsPassive = true;
+      }
+    });
+    window.addEventListener("testPassive", null, opts);
+    window.removeEventListener("testPassive", null, opts);
+  } catch (e) {}
+
+
   export default {
     components: {
       Spinner,
@@ -426,7 +438,7 @@
         }
         // add Event to document
         document.addEventListener('mousemove', this.mouseMove, false)
-        document.addEventListener('touchmove', this.touchMove, false)
+        document.addEventListener('touchmove', this.touchMove, supportsPassive ? { passive: true } : false)
         document.addEventListener('mouseup', this.mouseUp)
         document.addEventListener('touchend', this.touchEnd)
 
@@ -434,7 +446,9 @@
       },
 
       touchMove(e) {
-        e.preventDefault()
+        if (!supportsPassive) {
+          e.preventDefault()
+        }
         // IOS: outside of webview
         if (e.changedTouches[0].pageY > document.documentElement.clientHeight || e.changedTouches[0].pageY < 0) {
           document.dispatchEvent(new Event('touchend'))
