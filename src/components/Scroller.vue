@@ -62,6 +62,7 @@
 
   ._v-container > ._v-content {
     width: 100%;
+    position: relative;
 
     -webkit-transform-origin: left top;
     -webkit-transform: translateZ(0);
@@ -78,10 +79,13 @@
   ._v-container > ._v-content > .pull-to-refresh-layer {
     width: 100%;
     height: 60px;
-    margin-top: -60px;
+    /*margin-top: -60px;*/
     text-align: center;
     font-size: 16px;
     color: #AAA;
+    /*使用绝对定位*/
+    position: absolute;
+    top: -60px;
   }
 
   ._v-container > ._v-content > .loading-layer {
