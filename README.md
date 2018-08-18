@@ -44,7 +44,6 @@ https://github.com/wangdahoo/vue-scroller-demo
 |-----|-----|-----|-----|
 | onRefresh | pull to refresh callback | N | - |
 | onInfinite | infinite loading callback | N | - |
-| onInfinite | infinite loading callback | N | - |
 | refreshText | tips of `pull-to-refresh` | N | 下拉刷新 |
 | noDataText | tips of `no-more-data` when `infinite-loading` finished | N | 没有更多数据 |
 | width | scroller container width | N | `100%` |
