@@ -168,6 +168,8 @@
 
   const re = /^[\d]+(\%)?$/
 
+  const MutationObserverClass = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
+
   const widthAndHeightCoerce = (v) => {
     if (v[v.length - 1] != '%') return v + 'px'
     return v
@@ -178,6 +180,13 @@
   }
 
   export default {
+    data() {
+      return {
+        contentWidth: 0,
+        contentHeight: 0,
+        scrollTop: 0,
+      }
+    },
     components: {
       Spinner,
       Arrow
@@ -293,7 +302,8 @@
         pullToRefreshLayer: undefined,
         mousedown: false,
         infiniteTimer: undefined,
-        resizeTimer: undefined
+        resizeTimer: undefined,
+        mutationObserver: undefined
       }
     },
 
@@ -320,6 +330,9 @@
         bouncing: this.bouncing
       })
 
+      this.contentWidth = this.content.offsetWidth;
+      this.contentHeight = this.content.offsetHeight;
+
       // enable PullToRefresh
       if (this.onRefresh) {
         this.scroller.activatePullToRefresh(60, () => {
@@ -340,20 +353,38 @@
         })
       }
 
-      // enable infinite loading
-      if (this.onInfinite) {
-        this.infiniteTimer = setInterval(() => {
-          let {left, top, zoom} = this.scroller.getValues()
+      if (!MutationObserverClass) {
+        this.resizeTimer = setInterval(this.checkAndResize, 10);
+        // enable infinite loading
+        if (this.onInfinite) {
+          this.infiniteTimer = setInterval(this.checkAndInfinite, 10);
+        }
+      } else {
+        // enable infinite loading
+        if (this.onInfinite) {
+          this.scroller.addEventListener('scrollTopChanged', (top) => {
+            if (this.scrollTop !== top) {
+              this.scrollTop = top;
+              this.checkAndInfinite();
+            }
+          });
+        }
 
-          // 在 keep alive 中 deactivated 的组件长宽变为 0 
-          if (this.content.offsetHeight > 0 && 
-            top + 60 > this.content.offsetHeight - this.container.clientHeight) {
-            if (this.loadingState) return
-            this.loadingState = 1
-            this.showLoading = true
-            this.onInfinite(this.finishInfinite)
+        this.mutationObserver = new MutationObserverClass(() => {
+          this.checkAndResize();
+
+          // enable infinite loading
+          if (this.onInfinite) {
+            this.checkAndInfinite();
           }
-        }, 10);
+        });
+
+        this.mutationObserver.observe(this.container, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+          attributeFilter: ['style', 'class']
+        });
       }
 
       // setup scroller
@@ -365,25 +396,6 @@
         // console.log(this.snapWidth, this.snapHeight)
         this.scroller.setSnapSize(this.snapWidth, this.snapHeight)
       }
-
-      // onContentResize
-      const contentSize = () => {
-        return {
-          width: this.content.offsetWidth,
-          height: this.content.offsetHeight
-        }
-      }
-
-      let { content_width, content_height } = contentSize()
-      
-      this.resizeTimer = setInterval(() => {
-        let {width, height} = contentSize()
-        if (width !== content_width || height !== content_height) {
-          content_width = width
-          content_height = height
-          this.resize()
-        }
-      }, 10);
     },
 
     destroyed () {
@@ -396,6 +408,27 @@
         let container = this.container;
         let content = this.content;
         this.scroller.setDimensions(container.clientWidth, container.clientHeight, content.offsetWidth, content.offsetHeight);
+      },
+
+      checkAndResize() {
+        const width = this.content.offsetWidth;
+        const height = this.content.offsetHeight;
+        if (width !== this.contentWidth || height !== this.contentHeight) {
+          this.contentWidth = width;
+          this.contentHeight = height;
+          this.resize();
+        }
+      },
+
+      checkAndInfinite() {
+        if (this.loadingState) return
+        if (this.contentHeight <= 0) return
+
+        if (this.scrollTop + 60 <= this.contentHeight - this.container.clientHeight) return
+
+        this.loadingState = 1
+        this.showLoading = true
+        this.onInfinite(this.finishInfinite)
       },
 
       finishPullToRefresh() {

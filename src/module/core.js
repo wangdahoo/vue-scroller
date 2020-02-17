@@ -1279,6 +1279,7 @@
 
 						self.__scrollLeft = oldLeft + (diffLeft * percent);
 						self.__scrollTop = oldTop + (diffTop * percent);
+						self.fireEvent('scrollTopChanged', self.__scrollTop);
 						self.__zoomLevel = oldZoom + (diffZoom * percent);
 
 						// Push values out
@@ -1317,6 +1318,7 @@
 
 				self.__scheduledLeft = self.__scrollLeft = left;
 				self.__scheduledTop = self.__scrollTop = top;
+				self.fireEvent('scrollTopChanged', self.__scrollTop);
 				self.__scheduledZoom = self.__zoomLevel = zoom;
 
 				// Push values out
@@ -1477,6 +1479,7 @@
 
 				self.__scrollLeft = scrollLeft;
 				self.__scrollTop = scrollTop;
+				self.fireEvent('scrollTopChanged', self.__scrollTop);
 
 			}
 
@@ -1542,7 +1545,28 @@
 					}
 				}
 			}
-		}
+		},
+
+		eventMap: new Map(),
+
+		addEventListener: function(name, listener) {
+			let listeners = this.eventMap.get(name);
+			if (!listeners) {
+				listeners = [];
+				this.eventMap.set(name, listeners);
+			}
+
+			listeners.push(listener);
+		},
+
+		fireEvent: function(name, data) {
+			let listeners = this.eventMap.get(name);
+			if (listeners) {
+				listeners.forEach(function(listener) {
+					listener(data);
+				});
+			}
+		},
 	};
 
 	// Copy over members to prototype
