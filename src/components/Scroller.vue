@@ -399,8 +399,9 @@
     },
 
     destroyed () {
-      clearInterval(this.resizeTimer);
+      if (this.resizeTimer) clearInterval(this.resizeTimer);
       if (this.infiniteTimer) clearInterval(this.infiniteTimer);
+      if (this.mutationObserver) this.mutationObserver.disconnect();
     },
 
     methods: {
